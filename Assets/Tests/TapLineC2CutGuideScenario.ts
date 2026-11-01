@@ -24,6 +24,24 @@ export class TapLineC2CutGuideScenario extends Scenario {
   async run(): Promise<void> {
     const main = getMain()
     await waitForLensReady(main)
+    // Design detail: every tree has a latex cup hanging just below the low (right) end of the cut.
+    for (let i = 0; i < 3; i++) {
+      const t = main.getTree(i)
+      const cup = childNamed(t.trunk.getSceneObject(), "LatexCup")
+      expect(cup !== null, "Tree" + (i + 1) + " has a LatexCup").toBe(true)
+      const rmv = cup.getComponent("Component.RenderMeshVisual") as RenderMeshVisual
+      expect(isNull(rmv), "LatexCup has a mesh").toBe(false)
+      const mn = rmv.worldAabbMin()
+      const mx = rmv.worldAabbMax()
+      const end = t.guideEndWorld
+      // The wire hoop wraps the trunk, so measure the cup by its lowest part (the cup body) under the cut end.
+      const gap = end.y - mx.y
+      log("Tree" + (i + 1) + " cup: top " + (mx.y - FLOOR_Y).toFixed(1) + " cm, bottom " + (mn.y - FLOOR_Y).toFixed(1) +
+        " cm, cut end " + (end.y - FLOOR_Y).toFixed(1) + " cm, gap " + gap.toFixed(1) + " cm")
+      expect(gap, "cup sits below the end of the cut (not covering the end mark)").toBeGreaterThan(2)
+      // (MeshBuilder AABB min includes the trunk-local origin at the floor, so only the top edge is meaningful.)
+      expect(gap, "cup hangs just below the cut end (top within ~10 cm)").toBeLessThan(10)
+    }
     const rig = new TapLineCameraRig()
     rig.takeControl()
     try {

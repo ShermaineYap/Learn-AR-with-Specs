@@ -33,6 +33,8 @@
     debugLogs: false
     doneChimeTrack: false
     doneMessage: false
+    doneMessageDistanceCm: false
+    doneMessageHeightCm: false
     glowOnlyNextTree: false
     guideOnTrack: false
     proximityCm: false
@@ -61,6 +63,8 @@
       tipHoldSeconds: !<float> 4.000000
       tipFadeSeconds: 0.600000
       glowOnlyNextTree: true
+      doneMessageHeightCm: !<float> 140.000000
+      doneMessageDistanceCm: !<float> 100.000000
       cueVolume: 0.600000
       debugLogs: true
   ScriptTypes:
@@ -84,6 +88,8 @@
     - '// @input float tipHoldSeconds = 4 {"hint":"Seconds the tip note stays before fading on its own.", "widget":"slider", "min":1, "max":10, "step":0.5}'
     - '// @input float tipFadeSeconds = 0.6 {"hint":"Seconds the tip note takes to fade out.", "widget":"slider", "min":0.1, "max":3, "step":0.1}'
     - '// @input bool glowOnlyNextTree = true {"hint":"Only the next tree in order (1 → 2 → 3) can glow and start. Off = any untapped tree glows."}'
+    - "// @input float doneMessageHeightCm = 130 {\"hint\":\"'3 of 3 trees done' height above the floor (cm). Slightly below eye level.\", \"widget\":\"slider\", \"min\":80, \"max\":200, \"step\":5}"
+    - "// @input float doneMessageDistanceCm = 100 {\"hint\":\"'3 of 3 trees done' distance from the user (cm), on the line to the last tree. Kept just in front of the bark if the user stands closer.\", \"widget\":\"slider\", \"min\":40, \"max\":200, \"step\":5}"
     - '// @input float cueVolume = 0.6 {"hint":"Volume of the guide cue and done chime (0–1).", "widget":"slider", "min":0, "max":1, "step":0.05}'
     - '// @ui {"widget":"group_end"}'
     - '// @ui {"widget":"separator"}'

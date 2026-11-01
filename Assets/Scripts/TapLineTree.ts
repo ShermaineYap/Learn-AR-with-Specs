@@ -223,6 +223,8 @@ export class TapLineTree extends BaseScriptComponent {
       this.trunk.ensureBuilt()
       this.buildGlow()
       this.buildGuide()
+      // Latex cup hangs just below the low (right) end of the cut, so the stand-in reads as a rubber tree.
+      this.trunk.addLatexCup(GUIDE_END_ANGLE_DEG * DEG, this.guideEndLocal.y)
       this.buildTrunkTarget()
       this.buildEndTarget()
       this.setupAudio()

@@ -74,6 +74,16 @@ export class TapLineMain extends BaseScriptComponent {
   glowOnlyNextTree: boolean = true
 
   @input
+  @hint("'3 of 3 trees done' height above the floor (cm). Slightly below eye level.")
+  @widget(new SliderWidget(80, 200, 5))
+  doneMessageHeightCm: number = 130
+
+  @input
+  @hint("'3 of 3 trees done' distance from the user (cm), on the line to the last tree. Kept just in front of the bark if the user stands closer.")
+  @widget(new SliderWidget(40, 200, 5))
+  doneMessageDistanceCm: number = 100
+
+  @input
   @hint("Volume of the guide cue and done chime (0–1).")
   @widget(new SliderWidget(0, 1, 0.05))
   cueVolume: number = 0.6
@@ -287,6 +297,7 @@ export class TapLineMain extends BaseScriptComponent {
       this.log("tok from tree " + (next + 1))
     } else {
       this.clearArrow()
+      this.placeDoneMessage(this.trees[i])
       this.doneMessage.show()
       this.playCue(this.doneChimeTrack)
       this.log("all trees done")
@@ -325,6 +336,30 @@ export class TapLineMain extends BaseScriptComponent {
         break
     }
     this.log("tree " + (i + 1) + ": " + prev + " → " + s)
+  }
+
+  /**
+   * Puts the done message in front of the last tree, on the line from the user to its trunk:
+   * doneMessageDistanceCm from the user (but never inside the trunk), doneMessageHeightCm above the floor,
+   * turned (yaw only) to face the user — so it is in view right after the last end-mark pinch.
+   */
+  private placeDoneMessage(tree: TapLineTree): void {
+    const msgT = this.doneMessage.getSceneObject().getTransform()
+    const treeBase = tree.getSceneObject().getTransform().getWorldPosition() // trunk axis at the floor
+    const cam = this.camera ? this.camera.getTransform().getWorldPosition() : treeBase.add(new vec3(0, 160, -100))
+    const dx = treeBase.x - cam.x
+    const dz = treeBase.z - cam.z
+    const flat = Math.sqrt(dx * dx + dz * dz)
+    const dirX = flat > 0.001 ? dx / flat : 0
+    const dirZ = flat > 0.001 ? dz / flat : -1
+    const radius = tree.trunk ? tree.trunk.trunkRadius : 14
+    const maxDist = Math.max(20, flat - (radius + 6)) // stay in front of the bark
+    const dist = Math.min(this.doneMessageDistanceCm, maxDist)
+    msgT.setWorldPosition(new vec3(cam.x + dirX * dist, treeBase.y + this.doneMessageHeightCm, cam.z + dirZ * dist))
+    // Canvas content faces local +Z: yaw it so +Z points back at the user.
+    const yaw = Math.atan2(-dirX, -dirZ)
+    msgT.setWorldRotation(quat.angleAxis(yaw, vec3.up()))
+    this.log("done message placed " + dist.toFixed(0) + " cm from user, " + this.doneMessageHeightCm + " cm high")
   }
 
   private clearArrow(): void {

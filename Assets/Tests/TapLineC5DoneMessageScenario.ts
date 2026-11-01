@@ -4,7 +4,7 @@
 import {Scenario} from "Leaf.lspkg/Scenarios/scenario/Scenario"
 import {expect} from "Leaf.lspkg/Utils/common/Expect"
 import {findSceneObjectByName, nextFrame, sleep} from "Leaf.lspkg/Utils/common/Utils"
-import {TapLineCameraRig, getMain, log, pinchEndMark, waitForLensReady, walkUpAndPinchTrunk} from "./TapLineLeafHelpers"
+import {FLOOR_Y, TapLineCameraRig, getMain, log, pinchEndMark, waitForLensReady, walkUpAndPinchTrunk} from "./TapLineLeafHelpers"
 import {TapLineDoneMessageUI} from "../Scripts/TapLineDoneMessageUI"
 
 @component
@@ -44,8 +44,29 @@ export class TapLineC5DoneMessageScenario extends Scenario {
       log("done text: '" + done.currentText + "'")
       expect(done.currentText.includes("3 of 3 trees done")).toBe(true)
       expect(main.isArrowVisible, "no arrow after the last tree").toBe(false)
-      // FINDING (not part of the literal criterion, logged not asserted): can the user see the message
-      // without turning? Checks the projected bounds of the message's Text from three natural gazes.
+      // Placement (design fix): in front of Tree3, ~1 m from the user (clamped to just in front of the bark),
+      // ~140 cm above the floor, facing the user.
+      const msgPos = doneSO.getTransform().getWorldPosition()
+      const cam = rig.position
+      const flat = Math.hypot(msgPos.x - cam.x, msgPos.z - cam.z)
+      const treeBase = main.getTree(2).getSceneObject().getTransform().getWorldPosition()
+      const toTree = Math.hypot(treeBase.x - cam.x, treeBase.z - cam.z)
+      const msgToTree = Math.hypot(treeBase.x - msgPos.x, treeBase.z - msgPos.z)
+      const heightAboveFloor = msgPos.y - FLOOR_Y
+      const fwd = doneSO.getTransform().forward
+      const toCam = new vec3(cam.x - msgPos.x, 0, cam.z - msgPos.z).normalize()
+      const facing = fwd.x * toCam.x + fwd.z * toCam.z
+      log("done message: " + flat.toFixed(1) + " cm from user (tree " + toTree.toFixed(1) + " cm), " +
+        heightAboveFloor.toFixed(1) + " cm high, facing dot " + facing.toFixed(3) + ", " + msgToTree.toFixed(1) + " cm from trunk axis")
+      expect(flat, "message no more than ~1 m from the user").toBeLessThan(105)
+      expect(flat, "message not in the user's face").toBeGreaterThan(50)
+      expect(msgToTree, "message in front of the trunk, not inside it").toBeGreaterThan(main.getTree(2).trunk.trunkRadius + 3)
+      expect(msgToTree < toTree, "message between the user and Tree3").toBe(true)
+      expect(Math.abs(heightAboveFloor - main.doneMessageHeightCm), "message at the configured height (" + main.doneMessageHeightCm + " cm)").toBeLessThan(3)
+      expect(heightAboveFloor < 160, "message slightly below eye level").toBe(true)
+      expect(facing, "message faces the user").toBeGreaterThan(0.98)
+
+      // In view: projected bounds of the message's Text, from three natural gazes.
       const texts: Text[] = []
       const collect = (so: SceneObject) => {
         const t = so.getComponent("Component.Text") as Text
@@ -53,8 +74,20 @@ export class TapLineC5DoneMessageScenario extends Scenario {
         for (let k = 0; k < so.getChildrenCount(); k++) collect(so.getChild(k))
       }
       collect(doneSO)
+      expect(texts.length > 0, "done message has Text").toBe(true)
+      const pointsInView = (): number => {
+        const mn = texts[0].worldAabbMin()
+        const mx = texts[0].worldAabbMax()
+        let inside = 0
+        for (let ix = 0; ix <= 4; ix++)
+          for (let iy = 0; iy <= 2; iy++) {
+            const w = new vec3(mn.x + ((mx.x - mn.x) * ix) / 4, mn.y + ((mx.y - mn.y) * iy) / 2, mn.z + ((mx.z - mn.z) * ix) / 4)
+            const p = rig.project(w)
+            if (p.inFront && p.sp.x >= 0 && p.sp.x <= 1 && p.sp.y >= 0 && p.sp.y <= 1) inside++
+          }
+        return inside
+      }
       const visibleFraction = (): string => {
-        if (texts.length === 0) return "no Text found"
         const mn = texts[0].worldAabbMin()
         const mx = texts[0].worldAabbMax()
         let inside = 0
@@ -69,11 +102,20 @@ export class TapLineC5DoneMessageScenario extends Scenario {
         const c = rig.project(mn.add(mx).uniformScale(0.5))
         return inside + "/" + total + " sample points in view; centre at " + c.sp.toString()
       }
-      log("FINDING gaze=level, facing Tree3: " + visibleFraction())
-      await rig.lookAt(main.getTree(2).focusWorld, 250)
-      log("FINDING gaze=Tree3 guide height (120 cm): " + visibleFraction())
+      // Right after the pinch the user is looking at the end mark they just pinched — the key gaze.
+      // Measure all three gazes first (so the log shows each), then assert.
       await rig.lookAt(main.getTree(2).endMark.getTransform().getWorldPosition(), 250)
-      log("FINDING gaze=Tree3 end mark just pinched: " + visibleFraction())
+      log("gaze=Tree3 end mark just pinched: " + visibleFraction())
+      const atEndMark = pointsInView()
+      await rig.lookAt(main.getTree(2).focusWorld, 250)
+      log("gaze=Tree3 guide height (120 cm): " + visibleFraction())
+      const atGuide = pointsInView()
+      await rig.lookAt(msgPos.add(new vec3(0, 20, 0)), 250)
+      log("gaze=level toward Tree3: " + visibleFraction())
+      const atLevel = pointsInView()
+      expect(atEndMark, "whole message in view while looking at the end mark just pinched").toBe(15)
+      expect(atGuide, "whole message in view while looking at the guide").toBe(15)
+      expect(atLevel, "whole message in view at head level").toBe(15)
       expect(main.isDoneMessageVisible, "still visible after the glances").toBe(true)
 
       // ...then fades on its own.

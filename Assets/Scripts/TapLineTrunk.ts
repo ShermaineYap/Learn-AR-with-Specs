@@ -189,6 +189,121 @@ export class TapLineTrunk extends BaseScriptComponent {
     return [Math.min(1, base[0] * shade), Math.min(1, base[1] * shade), Math.min(1, base[2] * shade), 1];
   }
 
+  // Baked key light (material is unlit), same as the bark.
+  private shade(base: number[], n: number[]): number[] {
+    const L = [-0.45, 0.55, 0.7];
+    const ll = Math.hypot(L[0], L[1], L[2]);
+    const ndl = Math.max(0, (n[0] * L[0] + n[1] * L[1] + n[2] * L[2]) / ll);
+    const s = 0.62 + 0.45 * ndl;
+    return [Math.min(1, base[0] * s), Math.min(1, base[1] * s), Math.min(1, base[2] * s), 1];
+  }
+
+  /**
+   * Adds the latex-collection set that makes the stand-in read as a rubber tree: a small cup hanging just
+   * below the low end of the cut, a tin spout in the bark above it, and a thin wire hoop around the trunk.
+   * theta = angle of the cut's low (right) end; cutEndY = height of that end (local cm).
+   * Visual only: no collider, so it never blocks pinches on the end mark above it.
+   */
+  addLatexCup(theta: number, cutEndY: number): SceneObject {
+    const verts: number[] = [];
+    const idx: number[] = [];
+    let count = 0;
+    const v = (p: number[], n: number[], col: number[]): number => {
+      const c = this.shade(col, n);
+      verts.push(p[0], p[1], p[2], n[0], n[1], n[2], c[0], c[1], c[2], c[3]);
+      return count++;
+    };
+    // Both windings, so faces show from either side regardless of culling.
+    const quad = (a: number, b: number, c: number, d: number) => idx.push(a, b, c, a, c, d, a, c, b, a, d, c);
+
+    const CUP = [0.9, 0.66, 0.48]; // light clay — readable on the additive display
+    const LATEX = [0.98, 0.97, 0.93];
+    const TIN = [0.86, 0.88, 0.9];
+    const WIRE = [0.78, 0.78, 0.8];
+
+    const ox = Math.cos(theta), oz = Math.sin(theta); // outward from the trunk axis
+    const tx = -Math.sin(theta), tz = Math.cos(theta); // tangent around the trunk
+
+    // Cup: open truncated cone, outer + inner wall, rim, and a base.
+    const rTop = 5.5, rBot = 3.6, cupH = 7, wall = 0.35;
+    const spoutY = cutEndY - 5;
+    const rimY = spoutY - 4.5;
+    const barkR = this.radiusAt(theta, rimY);
+    const cx = ox * (barkR + rTop + 0.4), cz = oz * (barkR + rTop + 0.4);
+    const S = 28;
+    const coneN = (a: number) => {
+      const s = (rTop - rBot) / cupH;
+      const l = Math.hypot(1, s);
+      return [Math.cos(a) / l, -s / l, Math.sin(a) / l];
+    };
+    const ring = (r: number, y: number, a: number) => [cx + r * Math.cos(a), y, cz + r * Math.sin(a)];
+    for (let i = 0; i < S; i++) {
+      const a0 = (i / S) * Math.PI * 2, a1 = ((i + 1) / S) * Math.PI * 2;
+      const y0 = rimY - cupH, y1 = rimY;
+      // outer wall
+      quad(v(ring(rBot, y0, a0), coneN(a0), CUP), v(ring(rBot, y0, a1), coneN(a1), CUP),
+           v(ring(rTop, y1, a1), coneN(a1), CUP), v(ring(rTop, y1, a0), coneN(a0), CUP));
+      // inner wall (darker in shade naturally via inverted normal)
+      const n0 = coneN(a0).map((k) => -k), n1 = coneN(a1).map((k) => -k);
+      quad(v(ring(rBot - wall, y0 + wall, a0), n0, CUP), v(ring(rBot - wall, y0 + wall, a1), n1, CUP),
+           v(ring(rTop - wall, y1, a1), n1, CUP), v(ring(rTop - wall, y1, a0), n0, CUP));
+      // rim
+      quad(v(ring(rTop - wall, y1, a0), [0, 1, 0], CUP), v(ring(rTop - wall, y1, a1), [0, 1, 0], CUP),
+           v(ring(rTop, y1, a1), [0, 1, 0], CUP), v(ring(rTop, y1, a0), [0, 1, 0], CUP));
+      // base
+      quad(v([cx, y0, cz], [0, -1, 0], CUP), v(ring(rBot, y0, a0), [0, -1, 0], CUP),
+           v(ring(rBot, y0, a1), [0, -1, 0], CUP), v([cx, y0, cz], [0, -1, 0], CUP));
+      // latex pooled in the cup, ~60% full
+      const ly = rimY - cupH * 0.4;
+      const lr = rBot + (rTop - rBot) * 0.6 - wall;
+      quad(v([cx, ly, cz], [0, 1, 0], LATEX), v(ring(lr, ly, a0), [0, 1, 0], LATEX),
+           v(ring(lr, ly, a1), [0, 1, 0], LATEX), v([cx, ly, cz], [0, 1, 0], LATEX));
+    }
+
+    // Spout: a small tin strip pushed into the bark, sloping down toward the cup.
+    const sw = 1.6, sLen = 4.5, drop = 2.2;
+    const sb = this.radiusAt(theta, spoutY) - 0.3;
+    const sp = (along: number, side: number, up: number) => {
+      const r = sb + along;
+      return [ox * r + tx * side, spoutY - (along / sLen) * drop + up, oz * r + tz * side];
+    };
+    const sn = [ox * 0.4, 0.9, oz * 0.4];
+    quad(v(sp(0, -sw, 0), sn, TIN), v(sp(0, sw, 0), sn, TIN), v(sp(sLen, sw, 0), sn, TIN), v(sp(sLen, -sw, 0), sn, TIN));
+    // little upturned edges so it reads as a channel
+    quad(v(sp(0, -sw, 0), [-tx, 0, -tz], TIN), v(sp(sLen, -sw, 0), [-tx, 0, -tz], TIN),
+         v(sp(sLen, -sw, 0.5), [-tx, 0, -tz], TIN), v(sp(0, -sw, 0.5), [-tx, 0, -tz], TIN));
+    quad(v(sp(0, sw, 0), [tx, 0, tz], TIN), v(sp(sLen, sw, 0), [tx, 0, tz], TIN),
+         v(sp(sLen, sw, 0.5), [tx, 0, tz], TIN), v(sp(0, sw, 0.5), [tx, 0, tz], TIN));
+
+    // Wire hoop around the trunk at the rim, holding the cup.
+    const W = 48, wy = rimY - 0.6, wh = 0.35;
+    for (let i = 0; i < W; i++) {
+      const a0 = (i / W) * Math.PI * 2, a1 = ((i + 1) / W) * Math.PI * 2;
+      const r0 = this.radiusAt(a0, wy) + 0.25, r1 = this.radiusAt(a1, wy) + 0.25;
+      const n0 = [Math.cos(a0), 0, Math.sin(a0)], n1 = [Math.cos(a1), 0, Math.sin(a1)];
+      quad(v([r0 * n0[0], wy - wh / 2, r0 * n0[2]], n0, WIRE), v([r1 * n1[0], wy - wh / 2, r1 * n1[2]], n1, WIRE),
+           v([r1 * n1[0], wy + wh / 2, r1 * n1[2]], n1, WIRE), v([r0 * n0[0], wy + wh / 2, r0 * n0[2]], n0, WIRE));
+    }
+
+    const builder = new MeshBuilder([
+      { name: "position", components: 3 },
+      { name: "normal", components: 3, normalized: true },
+      { name: "color", components: 4 },
+    ]);
+    builder.topology = MeshTopology.Triangles;
+    builder.indexType = MeshIndexType.UInt16;
+    builder.appendVerticesInterleaved(verts);
+    builder.appendIndices(idx);
+    builder.updateMesh();
+
+    const so = global.scene.createSceneObject("LatexCup");
+    so.setParent(this.sceneObject);
+    const rmv = so.createComponent("Component.RenderMeshVisual") as RenderMeshVisual;
+    rmv.mesh = builder.getMesh();
+    if (this.material) rmv.mainMaterial = this.material;
+    return so;
+  }
+
   private build() {
     const builder = new MeshBuilder([
       { name: "position", components: 3 },
