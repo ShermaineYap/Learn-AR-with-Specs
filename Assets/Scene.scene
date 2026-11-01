@@ -4,6 +4,7 @@
     - !<own> 00000000-0000-0065-0000-000000000064
     - !<own> 0005641c-028d-459a-0000-000000014b4d
     - !<own> f5d74682-203a-4970-81ea-9fa7b88c96bb
+    - !<own> 1e6bca07-3629-488a-adaa-a577ed2e91d2
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
       - id: 1
@@ -234,6 +235,36 @@
     []
   Components:
     []
+- !<SceneObject/054f05b1-90c5-4b78-9853-060673fa9077>
+  PrefabRemaps:
+    []
+  Name: TokSource
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 120.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 5ae5636b-c787-4525-b187-bf1c315c917d
+- !<SceneObject/06948e17-d2e8-45f1-ac6f-66f766f9e931>
+  PrefabRemaps:
+    []
+  Name: EndMark
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    []
 - !<ScriptComponent/0847d2bb-a13f-4c4a-a404-169f67308f6f>
   PrefabRemaps:
     []
@@ -379,6 +410,21 @@
     - !<own> d90b4bdf-2fbf-4edc-afa1-d23c2d5ba257
   Components:
     []
+- !<SceneObject/0cdaef9a-3858-44fa-a327-8ff3f8a914b5>
+  PrefabRemaps:
+    []
+  Name: EndMark
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    []
 - !<SceneObject/0cffb60e-73f6-43c5-bb4f-286d39e0f1f6>
   PrefabRemaps:
     []
@@ -496,6 +542,21 @@
     - !<own> a6af4948-9adc-4052-ae22-db902dd2764e
   Components:
     []
+- !<SceneObject/160e1ecc-773a-452e-87bd-4cf2009a3290>
+  PrefabRemaps:
+    []
+  Name: DoneMessage
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 268.000000, y: 158.000000, z: 36.000000}
+    Rotation: {x: 0.000000, y: 180.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 439a9779-d6c0-4b59-82ba-933804e288fb
 - !<SceneObject/181c239f-175e-4912-94fc-d37a2599b2d6>
   PrefabRemaps:
     []
@@ -504,6 +565,75 @@
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 2.837150, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    []
+- !<ScriptComponent/1a26a154-9c98-4853-aa6c-91d56dae9afc>
+  PrefabRemaps:
+    []
+  Name: TapLineTipNoteUI
+  Enabled: true
+  ScriptAsset: !<reference> 402d5597-ac7e-4c40-8687-9c4d5d7ccca2
+  ScriptInputsDefault:
+    letterHeightCm: true
+    startHidden: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      tipText: Bark was cut too deep last time — go shallower
+      letterHeightCm: !<float> 3.000000
+      wrapWidthCm: !<float> 44.000000
+      textColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 0.920000, w: 1.000000}
+      startHidden: true
+  ScriptTypes:
+    "":
+      {}
+- !<AudioComponent/1a7bbbdb-36c9-4c4b-9434-a74498dc21a8>
+  PrefabRemaps:
+    []
+  Name: Audio
+  Enabled: true
+  AudioTrack: !<reference> 9346eec1-8de0-475c-bc98-088d06b45c55
+  EnableAutoplayLoop: false
+  Volume: 1.000000
+  EnableMixToSnap: false
+  RecordVolume: 1.000000
+  EnableSpatialAudio: false
+  EnableDistanceEffect: false
+  CurveType: Logarithm
+  MinDistance: 0.000000
+  MaxDistance: 100.000000
+  EnableDirectivityEffect: false
+  EnablePositionEffect: false
+- !<SceneObject/1e6bca07-3629-488a-adaa-a577ed2e91d2>
+  PrefabRemaps:
+    []
+  Name: TapLine
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 8cf33395-451e-4cdc-80ec-23a0fa3d3eaa
+    - !<own> 3c8a4f5e-0f14-4619-97be-be6c0669d605
+  Components:
+    - !<own> df7a4e76-d5da-47e6-b763-77503c5ec423
+- !<SceneObject/1ed61cae-00cf-4948-967d-93369974d56b>
+  PrefabRemaps:
+    []
+  Name: GuideLine
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
@@ -708,6 +838,40 @@
     - !<own> a7da4af4-3d84-4acd-a31e-920a56b4c5c8
   Components:
     []
+- !<SceneObject/309e5be4-39e9-44d5-b9d0-bf538b6303a7>
+  PrefabRemaps:
+    []
+  Name: CutGuide
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> f2be822f-7b17-46e5-933e-992458519414
+    - !<own> 3bca7ec8-6711-41eb-94a7-9ef156672403
+    - !<own> 06948e17-d2e8-45f1-ac6f-66f766f9e931
+  Components:
+    []
+- !<SceneObject/3188ceec-dc4e-4cbb-bfa5-51f47cbe26e5>
+  PrefabRemaps:
+    []
+  Name: CutGuide
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 1ed61cae-00cf-4948-967d-93369974d56b
+    - !<own> 890aaef6-28d3-4170-80da-743e1ff98a61
+    - !<own> ea4d8b8b-f55c-425c-b2d9-ae0bac4d5d3f
+  Components:
+    []
 - !<RenderMeshVisual/335c5f8b-2917-49e8-8af5-220696e9bc09>
   PrefabRemaps:
     []
@@ -728,6 +892,27 @@
   BlendNormals: false
   BlendShapes:
     {}
+- !<ScriptComponent/33ab6043-0185-45ad-84e7-54f0060d7ea0>
+  PrefabRemaps:
+    []
+  Name: TapLineTipNoteUI
+  Enabled: true
+  ScriptAsset: !<reference> 402d5597-ac7e-4c40-8687-9c4d5d7ccca2
+  ScriptInputsDefault:
+    letterHeightCm: true
+    startHidden: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      tipText: Follow the old cut — keep the 30° slope
+      letterHeightCm: !<float> 3.000000
+      wrapWidthCm: !<float> 44.000000
+      textColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 0.920000, w: 1.000000}
+      startHidden: true
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/33c3b818-8a2f-4298-8659-2ea691615666>
   PrefabRemaps:
     []
@@ -779,6 +964,44 @@
     - !<own> cec12eef-3a06-4b4a-b0ba-3de212ca34dc
   Components:
     []
+- !<ScriptComponent/37d89b40-d8f1-4efc-8bcd-69e89bda1bf6>
+  PrefabRemaps:
+    []
+  Name: TapLineTree
+  Enabled: true
+  ScriptAsset: !<reference> 8599cb4c-4abe-41be-8184-ddcbd4bbdddd
+  ScriptInputsDefault:
+    tipText: true
+    guideStartHeightCm: true
+    guideThicknessCm: true
+    guideColor: true
+    endMarkCm: true
+    glowColor: true
+    guideFadeSeconds: true
+    debugColliders: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      trunk: !<MappingBased.AssignableType_1> 87a0833b-b44e-435f-a79b-ddeffb72fd97
+      glow: !<reference.SceneObject> c936dc72-695c-4080-8408-a0ee170b4ad8
+      cutGuide: !<reference.SceneObject> e8e65a25-817d-4f5e-ad14-595b22f90998
+      guideLine: !<reference.SceneObject> 564f5aeb-23e9-4846-b449-4f68bb2b2163
+      startMark: !<reference.SceneObject> 4c24f450-edca-4103-8295-d905012968ed
+      endMark: !<reference.SceneObject> 0cdaef9a-3858-44fa-a327-8ff3f8a914b5
+      tipNote: !<MappingBased.AssignableType_2> efe4f95c-725a-4a84-9418-c54578710e20
+      tokAudio: !<reference.AudioComponent> 5ae5636b-c787-4525-b187-bf1c315c917d
+      tipText: Thin shave — stay under 1 mm
+      guideStartHeightCm: !<float> 120.000000
+      guideThicknessCm: !<float> 1.000000
+      guideColor: !<Vec4> {x: 1.000000, y: 0.900000, z: 0.550000, w: 1.000000}
+      endMarkCm: !<float> 5.000000
+      glowColor: !<Vec4> {x: 1.000000, y: 0.800000, z: 0.450000, w: 0.220000}
+      guideFadeSeconds: 0.800000
+      debugColliders: false
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/38562bff-09c5-4232-bff1-7ea62a1e7ec5>
   PrefabRemaps:
     []
@@ -824,6 +1047,52 @@
     - !<own> 54130007-65c1-48d3-b9df-0866d8112e01
   Components:
     []
+- !<SceneObject/3bca7ec8-6711-41eb-94a7-9ef156672403>
+  PrefabRemaps:
+    []
+  Name: StartMark
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    []
+- !<SceneObject/3c03f6c7-b1da-4467-a9ff-03641e6f8ee0>
+  PrefabRemaps:
+    []
+  Name: Glow
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    []
+- !<SceneObject/3c8a4f5e-0f14-4619-97be-be6c0669d605>
+  PrefabRemaps:
+    []
+  Name: DirectionArrow
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: -80.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 8242f108-9380-40b4-8413-6a3498469b2d
+    - !<own> ffa68b70-ab6f-4ea6-89ed-df4e36d90d38
 - !<SceneObject/3de2c7ea-1525-465a-9056-68565a4014a7>
   PrefabRemaps:
     []
@@ -869,6 +1138,30 @@
     []
   Components:
     - !<own> 1f969daa-5809-4500-b314-98d91ccba131
+- !<ScriptComponent/439a9779-d6c0-4b59-82ba-933804e288fb>
+  PrefabRemaps:
+    []
+  Name: TapLineDoneMessageUI
+  Enabled: true
+  ScriptAsset: !<reference> 631971b6-ae4d-4005-9ec3-6fb429cb8596
+  ScriptInputsDefault:
+    message: true
+    viewDistanceCm: true
+    textColor: true
+    holdSeconds: true
+    fadeSeconds: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      message: 3 of 3 trees done
+      viewDistanceCm: !<float> 90.000000
+      textColor: !<Vec4> {x: 0.750000, y: 1.000000, z: 0.800000, w: 1.000000}
+      holdSeconds: !<float> 4.000000
+      fadeSeconds: 1.200000
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/44097eaf-01da-45fb-8973-3bd8172618de>
   PrefabRemaps:
     []
@@ -914,6 +1207,21 @@
     - !<own> 8fe2a532-9bf3-4cde-b598-04ce5470718d
   Components:
     []
+- !<SceneObject/48e59750-c1e0-4bf4-b9e5-4673ef085b36>
+  PrefabRemaps:
+    []
+  Name: Trunk
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 87a0833b-b44e-435f-a79b-ddeffb72fd97
 - !<SceneObject/4c195c04-c397-454e-bd08-3485f37d84fe>
   PrefabRemaps:
     []
@@ -927,6 +1235,21 @@
     HasSegmentScaleCompensation: false
   Children:
     - !<own> 9c3a7929-faa9-4369-a85c-c75a6ab4eee7
+  Components:
+    []
+- !<SceneObject/4c24f450-edca-4103-8295-d905012968ed>
+  PrefabRemaps:
+    []
+  Name: StartMark
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
   Components:
     []
 - !<SceneObject/4cb212ad-5246-4215-adf1-aaf3ccfc0e9c>
@@ -974,6 +1297,21 @@
     - !<own> 46b79537-a269-46f1-9483-500d7a4170d6
   Components:
     []
+- !<SceneObject/564f5aeb-23e9-4846-b449-4f68bb2b2163>
+  PrefabRemaps:
+    []
+  Name: GuideLine
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    []
 - !<SceneObject/58ef319f-850e-40dd-8295-e6dc36ab4854>
   PrefabRemaps:
     []
@@ -989,6 +1327,23 @@
     - !<own> bf2095b6-c6f8-48c8-b840-e0a6cec0dc99
   Components:
     []
+- !<AudioComponent/5ae5636b-c787-4525-b187-bf1c315c917d>
+  PrefabRemaps:
+    []
+  Name: Audio
+  Enabled: true
+  AudioTrack: !<reference> 9346eec1-8de0-475c-bc98-088d06b45c55
+  EnableAutoplayLoop: false
+  Volume: 1.000000
+  EnableMixToSnap: false
+  RecordVolume: 1.000000
+  EnableSpatialAudio: false
+  EnableDistanceEffect: false
+  CurveType: Logarithm
+  MinDistance: 0.000000
+  MaxDistance: 100.000000
+  EnableDirectivityEffect: false
+  EnablePositionEffect: false
 - !<ScriptComponent/5f153ad7-2baa-4fd9-a298-0dcfad86da3b>
   PrefabRemaps:
     []
@@ -1154,6 +1509,43 @@
     - !<own> 80192b3e-40b9-4bfc-97ff-d04eb4e94315
   Components:
     []
+- !<ScriptComponent/6a92aa0f-cd05-4146-bcdc-ad3180e40ac3>
+  PrefabRemaps:
+    []
+  Name: TapLineTree
+  Enabled: true
+  ScriptAsset: !<reference> 8599cb4c-4abe-41be-8184-ddcbd4bbdddd
+  ScriptInputsDefault:
+    guideStartHeightCm: true
+    guideThicknessCm: true
+    guideColor: true
+    endMarkCm: true
+    glowColor: true
+    guideFadeSeconds: true
+    debugColliders: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      trunk: !<MappingBased.AssignableType_1> 8dca8ade-a406-4af4-91dc-4dd0c5f62dc2
+      glow: !<reference.SceneObject> 88287a20-f701-457f-a170-c6c1d7bee29f
+      cutGuide: !<reference.SceneObject> 309e5be4-39e9-44d5-b9d0-bf538b6303a7
+      guideLine: !<reference.SceneObject> f2be822f-7b17-46e5-933e-992458519414
+      startMark: !<reference.SceneObject> 3bca7ec8-6711-41eb-94a7-9ef156672403
+      endMark: !<reference.SceneObject> 06948e17-d2e8-45f1-ac6f-66f766f9e931
+      tipNote: !<MappingBased.AssignableType_2> 1a26a154-9c98-4853-aa6c-91d56dae9afc
+      tokAudio: !<reference.AudioComponent> e79249fc-3eb2-4980-9005-8e0ca4fd68e1
+      tipText: Bark was cut too deep last time — go shallower
+      guideStartHeightCm: !<float> 120.000000
+      guideThicknessCm: !<float> 1.000000
+      guideColor: !<Vec4> {x: 1.000000, y: 0.900000, z: 0.550000, w: 1.000000}
+      endMarkCm: !<float> 5.000000
+      glowColor: !<Vec4> {x: 1.000000, y: 0.800000, z: 0.450000, w: 0.220000}
+      guideFadeSeconds: 0.800000
+      debugColliders: false
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/6a99bdcf-c194-46c1-ba16-945f1d48a1dd>
   PrefabRemaps:
     []
@@ -1214,6 +1606,73 @@
     - !<own> 4c195c04-c397-454e-bd08-3485f37d84fe
   Components:
     []
+- !<SceneObject/6f106526-50ef-4ff0-a767-740422435324>
+  PrefabRemaps:
+    []
+  Name: TipNote
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 131.000000, z: 19.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 33ab6043-0185-45ad-84e7-54f0060d7ea0
+- !<ScriptComponent/6f5d2568-5e24-4c21-8f44-c9d1153df72d>
+  PrefabRemaps:
+    []
+  Name: TapLineTree
+  Enabled: true
+  ScriptAsset: !<reference> 8599cb4c-4abe-41be-8184-ddcbd4bbdddd
+  ScriptInputsDefault:
+    guideStartHeightCm: true
+    guideThicknessCm: true
+    guideColor: true
+    endMarkCm: true
+    glowColor: true
+    guideFadeSeconds: true
+    debugColliders: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      trunk: !<MappingBased.AssignableType_1> cbf61b08-883d-4a2e-a2bc-fc9f853cdd74
+      glow: !<reference.SceneObject> 3c03f6c7-b1da-4467-a9ff-03641e6f8ee0
+      cutGuide: !<reference.SceneObject> 3188ceec-dc4e-4cbb-bfa5-51f47cbe26e5
+      guideLine: !<reference.SceneObject> 1ed61cae-00cf-4948-967d-93369974d56b
+      startMark: !<reference.SceneObject> 890aaef6-28d3-4170-80da-743e1ff98a61
+      endMark: !<reference.SceneObject> ea4d8b8b-f55c-425c-b2d9-ae0bac4d5d3f
+      tipNote: !<MappingBased.AssignableType_2> 33ab6043-0185-45ad-84e7-54f0060d7ea0
+      tokAudio: !<reference.AudioComponent> 1a7bbbdb-36c9-4c4b-9434-a74498dc21a8
+      tipText: Follow the old cut — keep the 30° slope
+      guideStartHeightCm: !<float> 120.000000
+      guideThicknessCm: !<float> 1.000000
+      guideColor: !<Vec4> {x: 1.000000, y: 0.900000, z: 0.550000, w: 1.000000}
+      endMarkCm: !<float> 5.000000
+      glowColor: !<Vec4> {x: 1.000000, y: 0.800000, z: 0.450000, w: 0.220000}
+      guideFadeSeconds: 0.800000
+      debugColliders: false
+  ScriptTypes:
+    "":
+      {}
+- !<SceneObject/6f987887-01b9-4aa2-b432-9eba47acc759>
+  PrefabRemaps:
+    []
+  Name: Trunk
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 8dca8ade-a406-4af4-91dc-4dd0c5f62dc2
 - !<SceneObject/7037a633-4899-4f2e-bc97-2e3f35395687>
   PrefabRemaps:
     []
@@ -1398,6 +1857,24 @@
     []
   Components:
     - !<own> 335c5f8b-2917-49e8-8af5-220696e9bc09
+- !<ScriptComponent/8242f108-9380-40b4-8413-6a3498469b2d>
+  PrefabRemaps:
+    []
+  Name: TapLineDirectionArrowUI
+  Enabled: true
+  ScriptAsset: !<reference> 50ce6827-cb5c-4d4c-84e2-0befd45c3363
+  ScriptInputsDefault:
+    iconSizeCm: true
+    arrowColor: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      iconSizeCm: !<float> 4.000000
+      arrowColor: !<Vec4> {x: 1.000000, y: 0.850000, z: 0.450000, w: 1.000000}
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/82a4b4e8-283b-441c-8b94-9fdc50c958f2>
   PrefabRemaps:
     []
@@ -1476,6 +1953,63 @@
     - !<own> 1fc7fa3e-6910-4741-b8a7-1b6660a39a9d
   Components:
     - !<own> 28e05826-1521-46fa-a54c-80f2957ec80c
+- !<ScriptComponent/87a0833b-b44e-435f-a79b-ddeffb72fd97>
+  PrefabRemaps:
+    []
+  Name: TapLineTrunk
+  Enabled: true
+  ScriptAsset: !<reference> 99c6f6d9-6465-4341-b9c6-68730566f033
+  ScriptInputsDefault:
+    trunkHeight: true
+    trunkRadius: true
+    oldCutHeight: true
+    slopeDeg: true
+    grooveDepth: true
+    panelHeight: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      material: !<reference.Material> 70d03593-c7b4-410a-ae5c-75cb82ee32dc
+      trunkHeight: !<float> 300.000000
+      trunkRadius: !<float> 14.000000
+      oldCutHeight: !<float> 123.000000
+      slopeDeg: !<float> 30.000000
+      grooveDepth: 0.900000
+      panelHeight: !<float> 40.000000
+  ScriptTypes:
+    "":
+      {}
+- !<SceneObject/88287a20-f701-457f-a170-c6c1d7bee29f>
+  PrefabRemaps:
+    []
+  Name: Glow
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    []
+- !<SceneObject/890aaef6-28d3-4170-80da-743e1ff98a61>
+  PrefabRemaps:
+    []
+  Name: StartMark
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    []
 - !<SceneObject/8b877074-7eee-4be1-b669-714f8d5a1da3>
   PrefabRemaps:
     []
@@ -1514,6 +2048,21 @@
     Fingers_length: 0.000000
     Thumb_inflate: 0.000000
     Thumb_length: 0.000000
+- !<SceneObject/8c505803-f6a2-4c81-b76a-f88085f8ddf6>
+  PrefabRemaps:
+    []
+  Name: TipNote
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 131.000000, z: 19.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 1a26a154-9c98-4853-aa6c-91d56dae9afc
 - !<SceneObject/8cb3dd13-6ebf-41e6-9a23-94a69dd96f87>
   PrefabRemaps:
     []
@@ -1529,6 +2078,51 @@
     - !<own> b859e31c-4c76-46bd-bd6a-042228e52728
   Components:
     []
+- !<SceneObject/8cf33395-451e-4cdc-80ec-23a0fa3d3eaa>
+  PrefabRemaps:
+    []
+  Name: Grove
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: -160.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 90739657-3aec-4165-9bfe-f75ac8825643
+    - !<own> 9ad5f8f6-e9ec-4098-812a-cc17b3f642bb
+    - !<own> e8afec4b-71a3-42b9-9291-cf9f6e05be91
+    - !<own> 160e1ecc-773a-452e-87bd-4cf2009a3290
+  Components:
+    []
+- !<ScriptComponent/8dca8ade-a406-4af4-91dc-4dd0c5f62dc2>
+  PrefabRemaps:
+    []
+  Name: TapLineTrunk
+  Enabled: true
+  ScriptAsset: !<reference> 99c6f6d9-6465-4341-b9c6-68730566f033
+  ScriptInputsDefault:
+    trunkHeight: true
+    trunkRadius: true
+    oldCutHeight: true
+    slopeDeg: true
+    grooveDepth: true
+    panelHeight: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      material: !<reference.Material> 70d03593-c7b4-410a-ae5c-75cb82ee32dc
+      trunkHeight: !<float> 300.000000
+      trunkRadius: !<float> 14.000000
+      oldCutHeight: !<float> 123.000000
+      slopeDeg: !<float> 30.000000
+      grooveDepth: 0.900000
+      panelHeight: !<float> 40.000000
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/8fe2a532-9bf3-4cde-b598-04ce5470718d>
   PrefabRemaps:
     []
@@ -1544,6 +2138,25 @@
     - !<own> 8cb3dd13-6ebf-41e6-9a23-94a69dd96f87
   Components:
     []
+- !<SceneObject/90739657-3aec-4165-9bfe-f75ac8825643>
+  PrefabRemaps:
+    []
+  Name: Tree1
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: -250.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 48e59750-c1e0-4bf4-b9e5-4673ef085b36
+    - !<own> c936dc72-695c-4080-8408-a0ee170b4ad8
+    - !<own> e8e65a25-817d-4f5e-ad14-595b22f90998
+    - !<own> de11b785-f60b-4d03-8137-e44d687e507e
+    - !<own> 054f05b1-90c5-4b78-9853-060673fa9077
+  Components:
+    - !<own> 37d89b40-d8f1-4efc-8bcd-69e89bda1bf6
 - !<SceneObject/9468c53c-f76f-49b7-8a49-b5ec6af1c5a3>
   PrefabRemaps:
     []
@@ -1575,6 +2188,25 @@
     - !<own> a4de4ce7-f468-4966-8a06-e29eea60c023
   Components:
     []
+- !<SceneObject/9ad5f8f6-e9ec-4098-812a-cc17b3f642bb>
+  PrefabRemaps:
+    []
+  Name: Tree2
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 300.000000, y: 0.000000, z: -250.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 6f987887-01b9-4aa2-b432-9eba47acc759
+    - !<own> 88287a20-f701-457f-a170-c6c1d7bee29f
+    - !<own> 309e5be4-39e9-44d5-b9d0-bf538b6303a7
+    - !<own> 8c505803-f6a2-4c81-b76a-f88085f8ddf6
+    - !<own> e77a85f9-3f4c-4015-b4f8-388c0d660cee
+  Components:
+    - !<own> 6a92aa0f-cd05-4146-bcdc-ad3180e40ac3
 - !<SceneObject/9c3a7929-faa9-4369-a85c-c75a6ab4eee7>
   PrefabRemaps:
     []
@@ -1983,6 +2615,21 @@
   ScriptTypes:
     "":
       {}
+- !<SceneObject/c936dc72-695c-4080-8408-a0ee170b4ad8>
+  PrefabRemaps:
+    []
+  Name: Glow
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    []
 - !<SceneObject/ca40734c-262f-48d3-affa-9f99cd2940f7>
   PrefabRemaps:
     []
@@ -1998,6 +2645,33 @@
     - !<own> 0a0e1d78-8246-4f5b-ab1a-fdc51837956d
   Components:
     []
+- !<ScriptComponent/cbf61b08-883d-4a2e-a2bc-fc9f853cdd74>
+  PrefabRemaps:
+    []
+  Name: TapLineTrunk
+  Enabled: true
+  ScriptAsset: !<reference> 99c6f6d9-6465-4341-b9c6-68730566f033
+  ScriptInputsDefault:
+    trunkHeight: true
+    trunkRadius: true
+    oldCutHeight: true
+    slopeDeg: true
+    grooveDepth: true
+    panelHeight: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      material: !<reference.Material> 70d03593-c7b4-410a-ae5c-75cb82ee32dc
+      trunkHeight: !<float> 300.000000
+      trunkRadius: !<float> 14.000000
+      oldCutHeight: !<float> 123.000000
+      slopeDeg: !<float> 30.000000
+      grooveDepth: 0.900000
+      panelHeight: !<float> 40.000000
+  ScriptTypes:
+    "":
+      {}
 - !<Skin/ccf4d3bc-d3c2-4580-b9c5-62f164ef7eef>
   PrefabRemaps:
     []
@@ -2238,6 +2912,84 @@
     - !<own> d4a9c5e3-fe96-4824-9b20-59f5ad39eabd
   Components:
     []
+- !<SceneObject/dd7cf00f-f1a8-4a63-9d84-d31f6d7291dc>
+  PrefabRemaps:
+    []
+  Name: Trunk
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> cbf61b08-883d-4a2e-a2bc-fc9f853cdd74
+- !<SceneObject/de11b785-f60b-4d03-8137-e44d687e507e>
+  PrefabRemaps:
+    []
+  Name: TipNote
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 131.000000, z: 19.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> efe4f95c-725a-4a84-9418-c54578710e20
+- !<SceneObject/df2e100a-5b14-41be-afda-2a2ae115d687>
+  PrefabRemaps:
+    []
+  Name: TokSource
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 120.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 1a7bbbdb-36c9-4c4b-9434-a74498dc21a8
+- !<ScriptComponent/df7a4e76-d5da-47e6-b763-77503c5ec423>
+  PrefabRemaps:
+    []
+  Name: TapLineMain
+  Enabled: true
+  ScriptAsset: !<reference> 1cf62d43-1f73-44df-8029-90d2a32ad8d7
+  ScriptInputsDefault:
+    proximityCm: true
+    tipHoldSeconds: true
+    tipFadeSeconds: true
+    glowOnlyNextTree: true
+    cueVolume: true
+    debugLogs: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      tree1: !<MappingBased.AssignableType_1> 37d89b40-d8f1-4efc-8bcd-69e89bda1bf6
+      tree2: !<MappingBased.AssignableType_2> 6a92aa0f-cd05-4146-bcdc-ad3180e40ac3
+      tree3: !<MappingBased.AssignableType_3> 6f5d2568-5e24-4c21-8f44-c9d1153df72d
+      arrow: !<MappingBased.AssignableType_4> ffa68b70-ab6f-4ea6-89ed-df4e36d90d38
+      doneMessage: !<MappingBased.AssignableType_5> 439a9779-d6c0-4b59-82ba-933804e288fb
+      guideOnTrack: !<reference.AudioTrackAsset> 4abcd6c4-a707-4cfe-85e5-9b023613483a
+      doneChimeTrack: !<reference.AudioTrackAsset> f5cddf4a-63de-40fb-ba3f-5026c96e58d9
+      proximityCm: !<float> 150.000000
+      tipHoldSeconds: !<float> 4.000000
+      tipFadeSeconds: 0.600000
+      glowOnlyNextTree: true
+      cueVolume: 0.600000
+      debugLogs: true
+  ScriptTypes:
+    "":
+      {}
 - !<RenderMeshVisual/e1031f7e-3474-489f-a529-282f7192f812>
   PrefabRemaps:
     []
@@ -2313,6 +3065,74 @@
     - !<own> 0f983d21-20bc-4d89-a991-fbb95bacbd64
   Components:
     []
+- !<SceneObject/e77a85f9-3f4c-4015-b4f8-388c0d660cee>
+  PrefabRemaps:
+    []
+  Name: TokSource
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 120.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> e79249fc-3eb2-4980-9005-8e0ca4fd68e1
+- !<AudioComponent/e79249fc-3eb2-4980-9005-8e0ca4fd68e1>
+  PrefabRemaps:
+    []
+  Name: Audio
+  Enabled: true
+  AudioTrack: !<reference> 9346eec1-8de0-475c-bc98-088d06b45c55
+  EnableAutoplayLoop: false
+  Volume: 1.000000
+  EnableMixToSnap: false
+  RecordVolume: 1.000000
+  EnableSpatialAudio: false
+  EnableDistanceEffect: false
+  CurveType: Logarithm
+  MinDistance: 0.000000
+  MaxDistance: 100.000000
+  EnableDirectivityEffect: false
+  EnablePositionEffect: false
+- !<SceneObject/e8afec4b-71a3-42b9-9291-cf9f6e05be91>
+  PrefabRemaps:
+    []
+  Name: Tree3
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 300.000000, y: 0.000000, z: 50.000000}
+    Rotation: {x: 0.000000, y: 180.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> dd7cf00f-f1a8-4a63-9d84-d31f6d7291dc
+    - !<own> 3c03f6c7-b1da-4467-a9ff-03641e6f8ee0
+    - !<own> 3188ceec-dc4e-4cbb-bfa5-51f47cbe26e5
+    - !<own> 6f106526-50ef-4ff0-a767-740422435324
+    - !<own> df2e100a-5b14-41be-afda-2a2ae115d687
+  Components:
+    - !<own> 6f5d2568-5e24-4c21-8f44-c9d1153df72d
+- !<SceneObject/e8e65a25-817d-4f5e-ad14-595b22f90998>
+  PrefabRemaps:
+    []
+  Name: CutGuide
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 564f5aeb-23e9-4846-b449-4f68bb2b2163
+    - !<own> 4c24f450-edca-4103-8295-d905012968ed
+    - !<own> 0cdaef9a-3858-44fa-a327-8ff3f8a914b5
+  Components:
+    []
 - !<SceneObject/e9454e66-5d09-4a8a-bcd7-dea762326a48>
   PrefabRemaps:
     []
@@ -2351,6 +3171,43 @@
     Fingers_length: 0.000000
     Thumb_inflate: 0.000000
     Thumb_length: 0.000000
+- !<SceneObject/ea4d8b8b-f55c-425c-b2d9-ae0bac4d5d3f>
+  PrefabRemaps:
+    []
+  Name: EndMark
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    []
+- !<ScriptComponent/efe4f95c-725a-4a84-9418-c54578710e20>
+  PrefabRemaps:
+    []
+  Name: TapLineTipNoteUI
+  Enabled: true
+  ScriptAsset: !<reference> 402d5597-ac7e-4c40-8687-9c4d5d7ccca2
+  ScriptInputsDefault:
+    tipText: true
+    letterHeightCm: true
+    startHidden: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      tipText: Thin shave — stay under 1 mm
+      letterHeightCm: !<float> 3.000000
+      wrapWidthCm: !<float> 44.000000
+      textColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 0.920000, w: 1.000000}
+      startHidden: true
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/f0394c5d-4c44-4c65-a77c-e1c7e05ca905>
   PrefabRemaps:
     []
@@ -2359,6 +3216,21 @@
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 3.166710, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    []
+- !<SceneObject/f2be822f-7b17-46e5-933e-992458519414>
+  PrefabRemaps:
+    []
+  Name: GuideLine
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
@@ -2603,3 +3475,24 @@
     - !<own> bb75b5ea-8baf-4d8d-bcf8-49bd79873881
   Components:
     []
+- !<ScriptComponent/ffa68b70-ab6f-4ea6-89ed-df4e36d90d38>
+  PrefabRemaps:
+    []
+  Name: TapLineArrowController
+  Enabled: true
+  ScriptAsset: !<reference> 1151cd54-1039-415b-acab-ae2b9db3f621
+  ScriptInputsDefault:
+    distanceCm: true
+    edgeOffsetCm: true
+    inViewMargin: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      arrowUI: !<MappingBased.AssignableType_1> 8242f108-9380-40b4-8413-6a3498469b2d
+      distanceCm: !<float> 80.000000
+      edgeOffsetCm: !<float> 15.000000
+      inViewMargin: 0.080000
+  ScriptTypes:
+    "":
+      {}

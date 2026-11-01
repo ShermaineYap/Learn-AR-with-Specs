@@ -1,0 +1,92 @@
+- !<AssetImportMetadata/4d958f4c-b56b-4b20-bb32-1b7767c3e6e9>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 1cf62d43-1f73-44df-8029-90d2a32ad8d7
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 1cf62d43-1f73-44df-8029-90d2a32ad8d7
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 4519b903-a4a5-4df1-af43-16266fca1afe
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/4519b903-a4a5-4df1-af43-16266fca1afe>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: c176e262-a12e-4407-b40e-d2c9a6eaaa12
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    arrow: false
+    cueVolume: false
+    debugLogs: false
+    doneChimeTrack: false
+    doneMessage: false
+    glowOnlyNextTree: false
+    guideOnTrack: false
+    proximityCm: false
+    tipFadeSeconds: false
+    tipHoldSeconds: false
+    tree1: false
+    tree2: false
+    tree3: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - tree1: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
+      tree2: !<MappingBased.AssignableType_2> 00000000-0000-0000-0000-000000000000
+      tree3: !<MappingBased.AssignableType_3> 00000000-0000-0000-0000-000000000000
+      arrow: !<MappingBased.AssignableType_4> 00000000-0000-0000-0000-000000000000
+      doneMessage: !<MappingBased.AssignableType_5> 00000000-0000-0000-0000-000000000000
+      guideOnTrack: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
+      doneChimeTrack: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
+      proximityCm: !<float> 150.000000
+      tipHoldSeconds: !<float> 4.000000
+      tipFadeSeconds: 0.600000
+      glowOnlyNextTree: true
+      cueVolume: 0.600000
+      debugLogs: true
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">TapLineMain – tapping row manager</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"group_start", "label":"References"}'
+    - '// @input AssignableType_1 tree1 {"hint":"Tree 1 (straight ahead of the start)."}'
+    - '// @input AssignableType_2 tree2 {"hint":"Tree 2 (about 3 m to the right of Tree 1)."}'
+    - '// @input AssignableType_3 tree3 {"hint":"Tree 3 (about 3 m from Tree 2, behind the user while at Tree 2)."}'
+    - '// @input AssignableType_4 arrow {"hint":"Edge-of-view arrow controller."}'
+    - "// @input AssignableType_5 doneMessage {\"hint\":\"'3 of 3 trees done' message.\"}"
+    - '// @input Asset.AudioTrackAsset guideOnTrack {"hint":"Soft cue played when a cut guide appears."}'
+    - '// @input Asset.AudioTrackAsset doneChimeTrack {"hint":"Chime played when the last tree is finished."}'
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"group_start", "label":"Settings"}'
+    - '// @input float proximityCm = 150 {"hint":"Walk within this distance (cm, measured on the floor) of an untapped tree to make it glow.", "widget":"slider", "min":50, "max":300, "step":5}'
+    - '// @input float tipHoldSeconds = 4 {"hint":"Seconds the tip note stays before fading on its own.", "widget":"slider", "min":1, "max":10, "step":0.5}'
+    - '// @input float tipFadeSeconds = 0.6 {"hint":"Seconds the tip note takes to fade out.", "widget":"slider", "min":0.1, "max":3, "step":0.1}'
+    - '// @input bool glowOnlyNextTree = true {"hint":"Only the next tree in order (1 → 2 → 3) can glow and start. Off = any untapped tree glows."}'
+    - '// @input float cueVolume = 0.6 {"hint":"Volume of the guide cue and done chime (0–1).", "widget":"slider", "min":0, "max":1, "step":0.05}'
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"group_start", "label":"Debug"}'
+    - '// @input bool debugLogs = true {"hint":"Print state changes to the log."}'
+    - '// @ui {"widget":"group_end"}'

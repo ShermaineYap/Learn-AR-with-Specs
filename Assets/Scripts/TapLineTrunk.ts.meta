@@ -1,0 +1,70 @@
+- !<AssetImportMetadata/f6ee73c2-0130-4c65-8ec5-428be384dc94>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 99c6f6d9-6465-4341-b9c6-68730566f033
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 99c6f6d9-6465-4341-b9c6-68730566f033
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 282a84dc-710c-497a-9db6-94f90e1339f8
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/282a84dc-710c-497a-9db6-94f90e1339f8>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: 00e6af9f-0228-4e31-96d8-8eef2a522e95
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    grooveDepth: false
+    material: false
+    oldCutHeight: false
+    panelHeight: false
+    slopeDeg: false
+    trunkHeight: false
+    trunkRadius: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - material: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      trunkHeight: !<float> 300.000000
+      trunkRadius: !<float> 14.000000
+      oldCutHeight: !<float> 123.000000
+      slopeDeg: !<float> 30.000000
+      grooveDepth: 0.900000
+      panelHeight: !<float> 40.000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">TapLineTrunk – stand-in rubber tree trunk</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"group_start", "label":"References"}'
+    - '// @input Asset.Material material {"hint":"Vertex color material (vertexBaseColorMaterial)"}'
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"group_start", "label":"Settings"}'
+    - '// @input float trunkHeight = 300 {"hint":"Visible trunk height (cm)"}'
+    - '// @input float trunkRadius = 14 {"hint":"Trunk radius at tapping height (cm). 14 = 28 cm wide"}'
+    - '// @input float oldCutHeight = 123 {"hint":"Height of the old cut at its left (high) end (cm)"}'
+    - '// @input float slopeDeg = 30 {"hint":"Cut slope from horizontal (degrees), down to the right"}'
+    - '// @input float grooveDepth = 0.9 {"hint":"Depth of the old cut groove (cm)"}'
+    - '// @input float panelHeight = 40 {"hint":"Height of the renewed-bark tapped panel below the old cut (cm)"}'
+    - '// @ui {"widget":"group_end"}'

@@ -1,0 +1,62 @@
+- !<AssetImportMetadata/9a5c3c8c-38de-450b-ae20-7acbbad79c19>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 631971b6-ae4d-4005-9ec3-6fb429cb8596
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 631971b6-ae4d-4005-9ec3-6fb429cb8596
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 49e26f73-d494-41a8-b84c-865da1b2b303
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/49e26f73-d494-41a8-b84c-865da1b2b303>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: 29b11305-3108-48ac-be95-b4e089dbcca7
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    fadeSeconds: false
+    holdSeconds: false
+    message: false
+    textColor: false
+    viewDistanceCm: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - message: 3 of 3 trees done
+      viewDistanceCm: !<float> 90.000000
+      textColor: !<Vec4> {x: 0.750000, y: 1.000000, z: 0.800000, w: 1.000000}
+      holdSeconds: !<float> 4.000000
+      fadeSeconds: 1.200000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">TapLineDoneMessageUI – end-of-row message</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"group_start", "label":"Settings"}'
+    - '// @input string message = "3 of 3 trees done" {"hint":"Message text."}'
+    - '// @input float viewDistanceCm = 90 {"hint":"Viewing distance in cm the text is sized for (scales the Specs type scale).", "widget":"slider", "min":40, "max":200, "step":5}'
+    - '// @input vec4 textColor = "{0.75, 1.0, 0.8, 1.0}" {"hint":"Text and icon colour. Keep it light for the additive display.", "widget":"color"}'
+    - '// @input float holdSeconds = 4 {"hint":"Seconds the message stays at full opacity before fading.", "widget":"slider", "min":1, "max":10, "step":0.5}'
+    - '// @input float fadeSeconds = 1.2 {"hint":"Fade-out duration in seconds.", "widget":"slider", "min":0.2, "max":3, "step":0.1}'
+    - '// @ui {"widget":"group_end"}'

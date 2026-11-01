@@ -1,0 +1,62 @@
+- !<AssetImportMetadata/a576da85-4328-4b4a-8003-f198442a82eb>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 1151cd54-1039-415b-acab-ae2b9db3f621
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 1151cd54-1039-415b-acab-ae2b9db3f621
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 53e5ef26-ea8f-4b64-8ac7-55ca2746ce77
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/53e5ef26-ea8f-4b64-8ac7-55ca2746ce77>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: 804d3f0e-e442-44a5-8707-965aba33e697
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    arrowUI: false
+    distanceCm: false
+    edgeOffsetCm: false
+    inViewMargin: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - arrowUI: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
+      distanceCm: !<float> 80.000000
+      edgeOffsetCm: !<float> 15.000000
+      inViewMargin: 0.080000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">TapLineArrowController – edge-of-view arrow placement</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"group_start", "label":"References"}'
+    - '// @input AssignableType_1 arrowUI {"hint":"Arrow UI on this object."}'
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"group_start", "label":"Settings"}'
+    - '// @input float distanceCm = 80 {"hint":"Distance in front of the eyes where the arrow is drawn (cm).", "widget":"slider", "min":40, "max":150, "step":1}'
+    - '// @input float edgeOffsetCm = 15 {"hint":"How far from the centre of view the arrow sits (cm, at that distance). Larger = closer to the edge.", "widget":"slider", "min":4, "max":30, "step":0.5}'
+    - "// @input float inViewMargin = 0.08 {\"hint\":\"Screen margin (0–0.5) — the target counts as 'in view' only when inside this margin.\", \"widget\":\"slider\", \"min\":0, \"max\":0.3, \"step\":0.01}"
+    - '// @ui {"widget":"group_end"}'

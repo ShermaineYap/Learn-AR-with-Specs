@@ -1,0 +1,62 @@
+- !<AssetImportMetadata/87ce7930-ca31-4f89-aa44-ab66457ee7ef>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 402d5597-ac7e-4c40-8687-9c4d5d7ccca2
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 402d5597-ac7e-4c40-8687-9c4d5d7ccca2
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 559ef82a-da04-4b4d-817c-1955851b7c59
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/559ef82a-da04-4b4d-817c-1955851b7c59>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: a2a6ed40-906f-4d94-880e-e540ac63bbd8
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    letterHeightCm: false
+    startHidden: false
+    textColor: false
+    tipText: false
+    wrapWidthCm: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - tipText: Thin shave — stay under 1 mm
+      letterHeightCm: !<float> 3.000000
+      wrapWidthCm: !<float> 34.000000
+      textColor: !<Vec4> {x: 1.000000, y: 0.960000, z: 0.850000, w: 1.000000}
+      startHidden: true
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">TapLineTipNoteUI – tip text on the trunk</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"group_start", "label":"Settings"}'
+    - "// @input string tipText = \"Thin shave — stay under 1 mm\" {\"hint\":\"Tip text. TapLineTree overwrites this with the tree's own tip when the guide starts.\"}"
+    - '// @input float letterHeightCm = 3 {"hint":"Letter height (em-square) in cm. The brief asks for about 3 cm.", "widget":"slider", "min":1.5, "max":6, "step":0.1}'
+    - '// @input float wrapWidthCm = 44 {"hint":"Width the text wraps to, in cm.", "widget":"slider", "min":15, "max":60, "step":1}'
+    - '// @input vec4 textColor = "{1.0, 1.0, 0.92, 1.0}" {"hint":"Text colour. Keep it light — the Specs display is additive, so dark text disappears.", "widget":"color"}'
+    - '// @input bool startHidden = true {"hint":"Start hidden (the tip only appears with the cut guide)."}'
+    - '// @ui {"widget":"group_end"}'

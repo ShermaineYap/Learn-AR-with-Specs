@@ -1,0 +1,53 @@
+- !<AssetImportMetadata/830f88f9-2c91-4ac6-9715-f8be8a051c92>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 50ce6827-cb5c-4d4c-84e2-0befd45c3363
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 50ce6827-cb5c-4d4c-84e2-0befd45c3363
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 0257fab2-49c0-4307-b319-b1ac80b2aa52
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/0257fab2-49c0-4307-b319-b1ac80b2aa52>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: 046927f3-0685-47c1-9d70-da27bedee601
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    arrowColor: false
+    iconSizeCm: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - iconSizeCm: !<float> 4.000000
+      arrowColor: !<Vec4> {x: 1.000000, y: 0.850000, z: 0.450000, w: 1.000000}
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">TapLineDirectionArrowUI – edge-of-view arrow</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"group_start", "label":"Settings"}'
+    - '// @input float iconSizeCm = 4 {"hint":"Arrow icon size in cm (at the distance the controller places it).", "widget":"slider", "min":1, "max":10, "step":0.1}'
+    - '// @input vec4 arrowColor = "{1.0, 0.85, 0.45, 1.0}" {"hint":"Arrow colour. Warm and bright so it shows on the additive display.", "widget":"color"}'
+    - '// @ui {"widget":"group_end"}'

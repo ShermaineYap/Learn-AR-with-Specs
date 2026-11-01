@@ -1,0 +1,101 @@
+- !<AssetImportMetadata/50fb798c-d7ad-42b8-aa9e-a9940117163c>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 8599cb4c-4abe-41be-8184-ddcbd4bbdddd
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 8599cb4c-4abe-41be-8184-ddcbd4bbdddd
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 4b9da5c8-4440-4f70-b10e-b552d99aca8f
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/4b9da5c8-4440-4f70-b10e-b552d99aca8f>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: e2220aa2-b286-45aa-acce-56697bf12c15
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    cutGuide: false
+    debugColliders: false
+    endMark: false
+    endMarkCm: false
+    glow: false
+    glowColor: false
+    guideColor: false
+    guideFadeSeconds: false
+    guideLine: false
+    guideStartHeightCm: false
+    guideThicknessCm: false
+    startMark: false
+    tipNote: false
+    tipText: false
+    tokAudio: false
+    trunk: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - trunk: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
+      glow: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      cutGuide: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      guideLine: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      startMark: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      endMark: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      tipNote: !<MappingBased.AssignableType_2> 00000000-0000-0000-0000-000000000000
+      tokAudio: !<reference.AudioComponent> 00000000-0000-0000-0000-000000000000
+      tipText: Thin shave — stay under 1 mm
+      guideStartHeightCm: !<float> 120.000000
+      guideThicknessCm: !<float> 1.000000
+      guideColor: !<Vec4> {x: 1.000000, y: 0.900000, z: 0.550000, w: 1.000000}
+      endMarkCm: !<float> 5.000000
+      glowColor: !<Vec4> {x: 1.000000, y: 0.800000, z: 0.450000, w: 0.220000}
+      guideFadeSeconds: 0.800000
+      debugColliders: false
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">TapLineTree – one stand-in rubber tree</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"group_start", "label":"References"}'
+    - '// @input AssignableType_1 trunk {"hint":"The trunk mesh component (surface math is used to lay the guide on the bark)."}'
+    - '// @input SceneObject glow {"hint":"Glow shell SceneObject (faint proximity glow)."}'
+    - '// @input SceneObject cutGuide {"hint":"Cut guide root (line + start mark + end mark). Shown on trunk pinch, faded on end-mark pinch."}'
+    - '// @input SceneObject guideLine {"hint":"Guide line SceneObject (child of CutGuide)."}'
+    - '// @input SceneObject startMark {"hint":"Start mark SceneObject (child of CutGuide)."}'
+    - "// @input SceneObject endMark {\"hint\":\"End mark SceneObject (child of CutGuide). Pinch it to say 'done'.\"}"
+    - '// @input AssignableType_2 tipNote {"hint":"Tip note UI on this trunk."}'
+    - "// @input Component.AudioComponent tokAudio {\"hint\":\"Spatial audio source for the 'tok' that calls the user to this tree.\"}"
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"group_start", "label":"Settings"}'
+    - '// @input string tipText = "Thin shave — stay under 1 mm" {"hint":"Tip text shown with the guide on this tree."}'
+    - '// @input float guideStartHeightCm = 120 {"hint":"Height (cm above the floor) where the cut guide starts, on the left.", "widget":"slider", "min":80, "max":160, "step":1}'
+    - '// @input float guideThicknessCm = 1 {"hint":"Cut guide line thickness in cm.", "widget":"slider", "min":0.3, "max":3, "step":0.1}'
+    - '// @input vec4 guideColor = "{1.0, 0.9, 0.55, 1.0}" {"hint":"Cut guide colour — bright warm white/yellow for the additive display.", "widget":"color"}'
+    - '// @input float endMarkCm = 5 {"hint":"End mark diameter in cm (easy to pinch).", "widget":"slider", "min":3, "max":10, "step":0.1}'
+    - '// @input vec4 glowColor = "{1.0, 0.8, 0.45, 0.22}" {"hint":"Trunk glow colour; alpha is the faint resting glow strength.", "widget":"color"}'
+    - '// @input float guideFadeSeconds = 0.8 {"hint":"Seconds for the guide to fade away after the end mark is pinched.", "widget":"slider", "min":0.1, "max":3, "step":0.1}'
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"group_start", "label":"Debug"}'
+    - '// @input bool debugColliders {"hint":"Draw the trunk and end-mark colliders as wireframes (hit-zone check). Takes effect on preview restart."}'
+    - '// @ui {"widget":"group_end"}'
