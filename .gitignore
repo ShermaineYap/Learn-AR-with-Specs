@@ -1,0 +1,12 @@
+# macOS
+.DS_Store
+
+# Lens Studio local cache
+Cache/
+
+# Local MCP / agent config — can contain a local auth token, never commit
+.mcp.json
+.claude/settings.local.json
+
+# Node
+node_modules/
