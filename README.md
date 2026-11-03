@@ -4,7 +4,7 @@
 
 Built for Devpost's **Learn AR with SPECS** (Oct 15 – Nov 9, 2026). Planned with the Devpost Learn `plan-lens` skill, built by Snap's CLAD agents in Lens Studio 5.23.2 through the Lens Studio MCP, and tested with LEAF. It runs in Lens Studio's preview; no glasses are needed.
 
-**Demo video:** _link added after upload_
+**Demo video (2:36):** https://youtu.be/H8fdvysExc4 (copy in [`devpost/TapLine-demo.mp4`](devpost/TapLine-demo.mp4))
 
 ![The cut guide on Tree 1: a glowing line from 120 cm on the left, sloping about 30° down to the right, with the tip "Thin shave / under 1 mm" and a latex cup below](devpost/screenshots/03-guide.png)
 
