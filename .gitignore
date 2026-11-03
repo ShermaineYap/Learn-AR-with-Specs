@@ -37,3 +37,6 @@ node_modules/
 
 # Added by Lens Studio (LEAF plugin)
 leaf_plugin_settings.json
+
+# Raw screen recordings (large; final video goes to YouTube)
+recordings/
