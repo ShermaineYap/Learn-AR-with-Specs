@@ -56,7 +56,7 @@
     - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">TapLineTipNoteUI – tip text on the trunk</span>"}'
     - '// @ui {"widget":"separator"}'
     - '// @ui {"widget":"group_start", "label":"Settings"}'
-    - "// @input string tipText = \"Thin shave — stay under 1 mm\" {\"hint\":\"Tip text. TapLineTree overwrites this with the tree's own tip when the guide starts.\"}"
+    - "// @input string tipText = \"Thin shave / under 1 mm\" {\"hint\":\"Tip text. TapLineTree overwrites this with the tree's own tip when the guide starts.\"}"
     - '// @input float letterHeightCm = 3 {"hint":"Letter height (em-square) in cm. The brief asks for about 3 cm.", "widget":"slider", "min":1.5, "max":6, "step":0.1}'
     - "// @input float wrapWidthCm = 30 {\"hint\":\"Maximum line width in cm. Lines longer than this shrink to fit, so the note always fits the view at arm's length.\", \"widget\":\"slider\", \"min\":15, \"max\":60, \"step\":1}"
     - "// @input float maxLines = 2 {\"hint\":\"Maximum number of lines. Use ' / ' in the tip text to split lines.\"}"

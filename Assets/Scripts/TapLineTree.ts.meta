@@ -87,7 +87,7 @@
     - '// @ui {"widget":"group_end"}'
     - '// @ui {"widget":"separator"}'
     - '// @ui {"widget":"group_start", "label":"Settings"}'
-    - '// @input string tipText = "Thin shave — stay under 1 mm" {"hint":"Tip text shown with the guide on this tree."}'
+    - '// @input string tipText = "Thin shave / under 1 mm" {"hint":"Tip text shown with the guide on this tree."}'
     - '// @input float guideStartHeightCm = 120 {"hint":"Height (cm above the floor) where the cut guide starts, on the left.", "widget":"slider", "min":80, "max":160, "step":1}'
     - '// @input float guideThicknessCm = 1 {"hint":"Cut guide line thickness in cm.", "widget":"slider", "min":0.3, "max":3, "step":0.1}'
     - '// @input vec4 guideColor = "{1.0, 0.9, 0.55, 1.0}" {"hint":"Cut guide colour — bright warm white/yellow for the additive display.", "widget":"color"}'

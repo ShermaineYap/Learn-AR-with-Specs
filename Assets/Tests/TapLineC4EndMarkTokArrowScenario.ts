@@ -17,6 +17,7 @@ import {
   walkUpAndPinchTrunk,
   yawToward,
 } from "./TapLineLeafHelpers"
+import {TapLineDirectionArrowUI} from "../Scripts/TapLineDirectionArrowUI"
 
 @component
 export class TapLineC4EndMarkTokArrowScenario extends Scenario {
@@ -90,6 +91,46 @@ export class TapLineC4EndMarkTokArrowScenario extends Scenario {
       const apj = rig.project(arrowSO.getTransform().getWorldPosition())
       expect(apj.sp.x > 0 && apj.sp.x < 1 && apj.sp.y > 0 && apj.sp.y < 1, "arrow itself is within view").toBe(true)
       expect(apj.sp.x, "arrow toward the edge, not centre").toBeGreaterThan(0.55)
+
+      // Easy to notice: ~8 cm arrow, bright warm yellow like the cut line, gently pulsing, whole arrow in view.
+      const arrowUI = arrowSO.getComponent(TapLineDirectionArrowUI.getTypeName()) as TapLineDirectionArrowUI
+      expect(isNull(arrowUI), "arrow UI component").toBe(false)
+      log("arrow length " + arrowUI.arrowLengthCm.toFixed(1) + " cm (icon " + arrowUI.iconSizeCm + " cm), colour " +
+        arrowUI.arrowColor.toString() + ", cut line colour " + tree1.guideColor.toString())
+      expect(Math.abs(arrowUI.arrowLengthCm - 8), "arrow ~8 cm long").toBeLessThan(1)
+      const ac = arrowUI.arrowColor
+      const gc = tree1.guideColor
+      expect(Math.abs(ac.x - gc.x) + Math.abs(ac.y - gc.y) + Math.abs(ac.z - gc.z), "arrow colour matches the cut line").toBeLessThan(0.05)
+      let minScale = 99
+      let maxScale = 0
+      const pulseStart = getTime()
+      while (getTime() - pulseStart < 1.4) {
+        minScale = Math.min(minScale, arrowUI.pulseScale)
+        maxScale = Math.max(maxScale, arrowUI.pulseScale)
+        await nextFrame()
+      }
+      log("arrow pulse scale " + minScale.toFixed(3) + ".." + maxScale.toFixed(3) + " over 1.4 s")
+      expect(maxScale - minScale, "arrow pulses").toBeGreaterThan(0.05)
+      expect(maxScale, "pulse is gentle").toBeLessThan(1.25)
+      let iconSO: SceneObject | null = null
+      const findIcon = (so: SceneObject) => {
+        if (so.name === "ArrowIcon") iconSO = so
+        for (let k = 0; k < so.getChildrenCount(); k++) findIcon(so.getChild(k))
+      }
+      findIcon(arrowSO)
+      expect(iconSO !== null, "ArrowIcon exists").toBe(true)
+      const img = (iconSO as SceneObject).getComponent("Component.Image") as Image
+      const imn = img.worldAabbMin()
+      const imx = img.worldAabbMax()
+      let cornersIn = 0
+      for (const cx of [imn.x, imx.x])
+        for (const cy of [imn.y, imx.y])
+          for (const cz of [imn.z, imx.z]) {
+            const p = rig.project(new vec3(cx, cy, cz))
+            if (p.inFront && p.sp.x >= 0 && p.sp.x <= 1 && p.sp.y >= 0 && p.sp.y <= 1) cornersIn++
+          }
+      log("arrow icon corners in view: " + cornersIn + "/8")
+      expect(cornersIn, "whole arrow inside the view").toBe(8)
 
       // Really rotate the head toward Tree2; the arrow must disappear once Tree2 is in view.
       const targetYaw = yawToward(rig.position, tree2.focusWorld)

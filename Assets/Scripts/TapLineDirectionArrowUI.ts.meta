@@ -30,6 +30,8 @@
   ScriptInputsHidden:
     arrowColor: false
     iconSizeCm: false
+    pulseAmount: false
+    pulseHz: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -41,6 +43,8 @@
   DefaultScriptInputs:
     - iconSizeCm: !<float> 4.000000
       arrowColor: !<Vec4> {x: 1.000000, y: 0.850000, z: 0.450000, w: 1.000000}
+      pulseHz: 0.900000
+      pulseAmount: 0.120000
   ScriptTypes:
     -
       {}
@@ -48,6 +52,8 @@
     - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">TapLineDirectionArrowUI – edge-of-view arrow</span>"}'
     - '// @ui {"widget":"separator"}'
     - '// @ui {"widget":"group_start", "label":"Settings"}'
-    - '// @input float iconSizeCm = 4 {"hint":"Arrow icon size in cm (at the distance the controller places it).", "widget":"slider", "min":1, "max":10, "step":0.1}'
-    - '// @input vec4 arrowColor = "{1.0, 0.85, 0.45, 1.0}" {"hint":"Arrow colour. Warm and bright so it shows on the additive display.", "widget":"color"}'
+    - '// @input float iconSizeCm = 12 {"hint":"Icon image size in cm. The arrow glyph fills ~65% of the image, so 12 cm draws an ~8 cm arrow.", "widget":"slider", "min":1, "max":20, "step":0.5}'
+    - '// @input vec4 arrowColor = "{1.0, 0.9, 0.55, 1.0}" {"hint":"Arrow colour: bright warm yellow, matching the cut line. Shows well on the additive display.", "widget":"color"}'
+    - '// @input float pulseHz = 0.9 {"hint":"Pulse rate in cycles per second. Gentle = slow.", "widget":"slider", "min":0.2, "max":3, "step":0.1}'
+    - '// @input float pulseAmount = 0.12 {"hint":"Pulse depth: how much the arrow grows (scale) and dims at the low point (0 = no pulse).", "widget":"slider", "min":0, "max":0.5, "step":0.01}'
     - '// @ui {"widget":"group_end"}'

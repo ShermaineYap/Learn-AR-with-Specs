@@ -1899,14 +1899,16 @@
   Enabled: true
   ScriptAsset: !<reference> 50ce6827-cb5c-4d4c-84e2-0befd45c3363
   ScriptInputsDefault:
-    iconSizeCm: true
-    arrowColor: true
+    pulseHz: true
+    pulseAmount: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
-      iconSizeCm: !<float> 4.000000
-      arrowColor: !<Vec4> {x: 1.000000, y: 0.850000, z: 0.450000, w: 1.000000}
+      iconSizeCm: !<float> 12.000000
+      arrowColor: !<Vec4> {x: 1.000000, y: 0.900000, z: 0.550000, w: 1.000000}
+      pulseHz: 0.900000
+      pulseAmount: 0.120000
   ScriptTypes:
     "":
       {}
