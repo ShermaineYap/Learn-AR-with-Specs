@@ -79,7 +79,7 @@ export class TapLineMain extends BaseScriptComponent {
   doneMessageHeightCm: number = 130
 
   @input
-  @hint("'3 of 3 trees done' distance from the user (cm), on the line to the last tree. Kept just in front of the bark if the user stands closer.")
+  @hint("'3 of 3 trees done' distance from the user (cm), on the line to the last tree.")
   @widget(new SliderWidget(40, 200, 5))
   doneMessageDistanceCm: number = 100
 
@@ -339,22 +339,23 @@ export class TapLineMain extends BaseScriptComponent {
   }
 
   /**
-   * Puts the done message in front of the last tree, on the line from the user to its trunk:
-   * doneMessageDistanceCm from the user (but never inside the trunk), doneMessageHeightCm above the floor,
+   * Puts the done message in front of the user, toward the end mark they just pinched (so it is centred
+   * where they are looking): doneMessageDistanceCm from the user, doneMessageHeightCm above the floor,
    * turned (yaw only) to face the user — so it is in view right after the last end-mark pinch.
    */
   private placeDoneMessage(tree: TapLineTree): void {
     const msgT = this.doneMessage.getSceneObject().getTransform()
     const treeBase = tree.getSceneObject().getTransform().getWorldPosition() // trunk axis at the floor
+    const aim = tree.guideEndWorld // the end mark just pinched
     const cam = this.camera ? this.camera.getTransform().getWorldPosition() : treeBase.add(new vec3(0, 160, -100))
-    const dx = treeBase.x - cam.x
-    const dz = treeBase.z - cam.z
+    const dx = aim.x - cam.x
+    const dz = aim.z - cam.z
     const flat = Math.sqrt(dx * dx + dz * dz)
     const dirX = flat > 0.001 ? dx / flat : 0
     const dirZ = flat > 0.001 ? dz / flat : -1
-    const radius = tree.trunk ? tree.trunk.trunkRadius : 14
-    const maxDist = Math.max(20, flat - (radius + 6)) // stay in front of the bark
-    const dist = Math.min(this.doneMessageDistanceCm, maxDist)
+    // Always doneMessageDistanceCm from the user. It draws without depth test, so the stand-in trunk never
+    // hides it (on the glasses a real trunk can't occlude virtual content either).
+    const dist = this.doneMessageDistanceCm
     msgT.setWorldPosition(new vec3(cam.x + dirX * dist, treeBase.y + this.doneMessageHeightCm, cam.z + dirZ * dist))
     // Canvas content faces local +Z: yaw it so +Z points back at the user.
     const yaw = Math.atan2(-dirX, -dirZ)

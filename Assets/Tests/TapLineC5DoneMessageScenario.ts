@@ -32,6 +32,7 @@ export class TapLineC5DoneMessageScenario extends Scenario {
       }
       expect(main.isComplete).toBe(false)
       await pinchEndMark(main, 2)
+      const shownAt = getTime()
       await sleep(100)
 
       expect(main.isComplete).toBe(true)
@@ -58,10 +59,9 @@ export class TapLineC5DoneMessageScenario extends Scenario {
       const facing = fwd.x * toCam.x + fwd.z * toCam.z
       log("done message: " + flat.toFixed(1) + " cm from user (tree " + toTree.toFixed(1) + " cm), " +
         heightAboveFloor.toFixed(1) + " cm high, facing dot " + facing.toFixed(3) + ", " + msgToTree.toFixed(1) + " cm from trunk axis")
-      expect(flat, "message no more than ~1 m from the user").toBeLessThan(105)
-      expect(flat, "message not in the user's face").toBeGreaterThan(50)
-      expect(msgToTree, "message in front of the trunk, not inside it").toBeGreaterThan(main.getTree(2).trunk.trunkRadius + 3)
-      expect(msgToTree < toTree, "message between the user and Tree3").toBe(true)
+      expect(Math.abs(flat - 100), "message ~1 m in front of the user").toBeLessThan(5)
+      // Toward Tree3 (in front of the user, on the line to the tree), drawn over the stand-in trunk.
+      expect(msgToTree <= toTree + 1, "message toward Tree3, not behind the user").toBe(true)
       expect(Math.abs(heightAboveFloor - main.doneMessageHeightCm), "message at the configured height (" + main.doneMessageHeightCm + " cm)").toBeLessThan(3)
       expect(heightAboveFloor < 160, "message slightly below eye level").toBe(true)
       expect(facing, "message faces the user").toBeGreaterThan(0.98)
@@ -75,6 +75,27 @@ export class TapLineC5DoneMessageScenario extends Scenario {
       }
       collect(doneSO)
       expect(texts.length > 0, "done message has Text").toBe(true)
+      const doneLetterCm = texts[0].size / 43.886
+      const tc = texts[0].textFill.color
+      log("done text: letter (em) " + doneLetterCm.toFixed(2) + " cm, colour " + tc.toString() + ", depthTest " + texts[0].depthTest)
+      expect(Math.abs(doneLetterCm - 5), "done letters ~5 cm").toBeLessThan(0.5)
+      expect(Math.min(tc.x, tc.y, tc.z) > 0.75 && tc.x >= tc.z, "bright warm-white text").toBe(true)
+      expect(texts[0].depthTest, "stand-in trunk can't hide the message").toBe(false)
+      let icon: SceneObject | null = null
+      for (let k = 0; k < doneSO.getChildrenCount(); k++) if (doneSO.getChild(k).name === "DoneIcon") icon = doneSO.getChild(k)
+      expect(icon !== null && icon.enabled, "check icon shown").toBe(true)
+      // Icon sits beside the text: left of it and vertically centred on it.
+      const iconP = icon.getTransform().getWorldPosition()
+      const tmnD = texts[0].worldAabbMin()
+      const tmxD = texts[0].worldAabbMax()
+      const textCentreY = (tmnD.y + tmxD.y) / 2
+      const iconLocalX = doneSO.getTransform().getInvertedWorldTransform().multiplyPoint(iconP).x
+      const textLocalMinX = doneSO.getTransform().getInvertedWorldTransform().multiplyPoint(tmnD).x
+      const textLocalMaxX = doneSO.getTransform().getInvertedWorldTransform().multiplyPoint(tmxD).x
+      log("icon local x " + iconLocalX.toFixed(1) + ", text local x " + Math.min(textLocalMinX, textLocalMaxX).toFixed(1) + ".." +
+        Math.max(textLocalMinX, textLocalMaxX).toFixed(1) + ", icon y - text centre y " + (iconP.y - textCentreY).toFixed(2))
+      expect(iconLocalX < Math.min(textLocalMinX, textLocalMaxX), "icon left of the text").toBe(true)
+      expect(Math.abs(iconP.y - textCentreY), "icon vertically centred on the text").toBeLessThan(1.5)
       const pointsInView = (): number => {
         const mn = texts[0].worldAabbMin()
         const mx = texts[0].worldAabbMax()
@@ -114,8 +135,14 @@ export class TapLineC5DoneMessageScenario extends Scenario {
       log("gaze=level toward Tree3: " + visibleFraction())
       const atLevel = pointsInView()
       expect(atEndMark, "whole message in view while looking at the end mark just pinched").toBe(15)
-      expect(atGuide, "whole message in view while looking at the guide").toBe(15)
       expect(atLevel, "whole message in view at head level").toBe(15)
+      // The guide has already faded when this message appears, so the trunk-centre gaze is informational only.
+      log("trunk-centre gaze (informational): " + atGuide + "/15")
+      // Row is centred on the message origin (icon + text balanced).
+      const rowL = Math.min(iconLocalX - 2.5, Math.min(textLocalMinX, textLocalMaxX))
+      const rowR = Math.max(textLocalMinX, textLocalMaxX)
+      log("row local x " + rowL.toFixed(1) + ".." + rowR.toFixed(1))
+      expect(Math.abs(rowL + rowR), "icon + text row centred").toBeLessThan(3)
       expect(main.isDoneMessageVisible, "still visible after the glances").toBe(true)
 
       // ...then fades on its own.
@@ -132,7 +159,10 @@ export class TapLineC5DoneMessageScenario extends Scenario {
         await nextFrame()
       }
       log("done message fade started " + fadeStart.toFixed(2) + " s, gone at " + goneAt.toFixed(2) + " s")
-      expect(fadeStart, "message holds for a moment before fading").toBeGreaterThan(1)
+      // Measured from when the message appeared (the glances above took some of the hold time).
+      const shownFor = fadeStart + (t0 - shownAt)
+      log("done message on screen " + shownFor.toFixed(2) + " s before fading")
+      expect(Math.abs(shownFor - 4), "message stays ~4 s before fading").toBeLessThan(0.5)
       expect(goneAt > 0, "done message faded out within 10 s").toBe(true)
       expect(goneAt - fadeStart, "fade is gradual, not a cut").toBeGreaterThan(0.3)
       await sleep(300)

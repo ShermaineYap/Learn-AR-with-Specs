@@ -109,8 +109,29 @@ export class TapLineC2CutGuideScenario extends Scenario {
       expect(main.isTipNoteVisibleOn(2)).toBe(false)
       expect(tree.tipNote.currentAlpha).toBeCloseTo(1, 1)
       log("tip text: '" + tree.tipNote.currentText + "'")
-      expect(tree.tipNote.currentText).toBe(tree.tipText)
-      expect(tree.tipNote.currentText.length).toBeGreaterThan(3)
+      expect(tree.tipNote.currentText).toBe("Thin shave\nunder 1 mm")
+      expect(tree.tipNote.lineCount, "tip note is at most two lines").toBeLessThan(3)
+      // Size: at most ~30 cm wide, letters ~3 cm, centred on the trunk.
+      const tipTexts: Text[] = []
+      const collectText = (so: SceneObject) => {
+        const t = so.getComponent("Component.Text") as Text
+        if (!isNull(t)) tipTexts.push(t)
+        for (let k = 0; k < so.getChildrenCount(); k++) collectText(so.getChild(k))
+      }
+      collectText(tree.tipNote.getSceneObject())
+      expect(tipTexts.length, "tip note has a Text").toBe(1)
+      const tipText = tipTexts[0]
+      const tmn = tipText.worldAabbMin()
+      const tmx = tipText.worldAabbMax()
+      const tipWidth = tmx.x - tmn.x // Tree1 faces +Z, so the note's width runs along world X
+      const letterCm = tipText.size / 43.886
+      const trunkAxisX = tree.getSceneObject().getTransform().getWorldPosition().x
+      const tipCentreX = (tmn.x + tmx.x) / 2
+      log("tip note: width " + tipWidth.toFixed(1) + " cm, letter (em) " + letterCm.toFixed(2) + " cm, centre offset " +
+        (tipCentreX - trunkAxisX).toFixed(1) + " cm, bottom " + (tmn.y - FLOOR_Y).toFixed(1) + " cm, top " + (tmx.y - FLOOR_Y).toFixed(1) + " cm")
+      expect(tipWidth, "tip note no wider than ~30 cm").toBeLessThan(31)
+      expect(Math.abs(letterCm - 3), "tip letters ~3 cm").toBeLessThan(0.35)
+      expect(Math.abs(tipCentreX - trunkAxisX), "tip note centred on the trunk").toBeLessThan(2)
       const tipPos = tree.tipNote.getTransform().getWorldPosition()
       expect(tipPos.y, "tip note above the guide start").toBeGreaterThan(s.y)
       const tipOnTrunk = Math.sqrt(Math.pow(tipPos.x - s.x, 2) + Math.pow(tipPos.z - s.z, 2))
@@ -127,6 +148,34 @@ export class TapLineC2CutGuideScenario extends Scenario {
       expect(inView(smPos), "start mark in view when looking at the trunk").toBe(true)
       expect(inView(emPos), "end mark in view when looking at the trunk").toBe(true)
       expect(inView(tipPos), "tip note in view when looking at the trunk").toBe(true)
+
+      // At arm's length (~60 cm from the bark), looking at the middle of the cut: the WHOLE note, both marks
+      // and the line are in view, and the note does not cover the start mark.
+      const treeBase = tree.getSceneObject().getTransform().getWorldPosition()
+      await rig.placeAt(new vec3(treeBase.x, 0, treeBase.z + 75), 0)
+      await rig.lookAt(s.add(e).uniformScale(0.5), 400)
+      await sleep(100)
+      const nmn = tipText.worldAabbMin()
+      const nmx = tipText.worldAabbMax()
+      let notePts = 0
+      let minSx = 1, maxSx = 0, maxSy = 0
+      for (let ix = 0; ix <= 4; ix++)
+        for (let iy = 0; iy <= 2; iy++) {
+          const w = new vec3(nmn.x + ((nmx.x - nmn.x) * ix) / 4, nmn.y + ((nmx.y - nmn.y) * iy) / 2, nmn.z + ((nmx.z - nmn.z) * iy) / 2)
+          const pj = rig.project(w)
+          if (pj.inFront && pj.sp.x >= 0 && pj.sp.x <= 1 && pj.sp.y >= 0 && pj.sp.y <= 1) notePts++
+          minSx = Math.min(minSx, pj.sp.x)
+          maxSx = Math.max(maxSx, pj.sp.x)
+          maxSy = Math.max(maxSy, pj.sp.y) // screen y grows downward: max = note's lowest point on screen
+        }
+      const sm = rig.project(smPos)
+      const smR = 0.012 // ~1 cm start-mark radius on screen at this distance
+      const startClear = sm.sp.y - smR > maxSy || sm.sp.x < minSx || sm.sp.x > maxSx
+      log("arm's length: note " + notePts + "/15 points in view, screen x " + minSx.toFixed(2) + ".." + maxSx.toFixed(2) +
+        ", note bottom y " + maxSy.toFixed(3) + ", start mark y " + sm.sp.y.toFixed(3))
+      expect(notePts, "whole tip note in view at arm's length").toBe(15)
+      expect(inView(smPos) && inView(emPos), "both marks in view at arm's length").toBe(true)
+      expect(startClear, "tip note does not cover the start mark").toBe(true)
       log("C2 done")
     } finally {
       rig.release()

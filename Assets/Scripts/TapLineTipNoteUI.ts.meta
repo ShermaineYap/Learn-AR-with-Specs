@@ -29,6 +29,7 @@
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
     letterHeightCm: false
+    maxLines: false
     startHidden: false
     textColor: false
     tipText: false
@@ -45,6 +46,7 @@
     - tipText: Thin shave — stay under 1 mm
       letterHeightCm: !<float> 3.000000
       wrapWidthCm: !<float> 34.000000
+      maxLines: !<float> 2.000000
       textColor: !<Vec4> {x: 1.000000, y: 0.960000, z: 0.850000, w: 1.000000}
       startHidden: true
   ScriptTypes:
@@ -56,7 +58,8 @@
     - '// @ui {"widget":"group_start", "label":"Settings"}'
     - "// @input string tipText = \"Thin shave — stay under 1 mm\" {\"hint\":\"Tip text. TapLineTree overwrites this with the tree's own tip when the guide starts.\"}"
     - '// @input float letterHeightCm = 3 {"hint":"Letter height (em-square) in cm. The brief asks for about 3 cm.", "widget":"slider", "min":1.5, "max":6, "step":0.1}'
-    - '// @input float wrapWidthCm = 44 {"hint":"Width the text wraps to, in cm.", "widget":"slider", "min":15, "max":60, "step":1}'
+    - "// @input float wrapWidthCm = 30 {\"hint\":\"Maximum line width in cm. Lines longer than this shrink to fit, so the note always fits the view at arm's length.\", \"widget\":\"slider\", \"min\":15, \"max\":60, \"step\":1}"
+    - "// @input float maxLines = 2 {\"hint\":\"Maximum number of lines. Use ' / ' in the tip text to split lines.\"}"
     - '// @input vec4 textColor = "{1.0, 1.0, 0.92, 1.0}" {"hint":"Text colour. Keep it light — the Specs display is additive, so dark text disappears.", "widget":"color"}'
     - '// @input bool startHidden = true {"hint":"Start hidden (the tip only appears with the cut guide)."}'
     - '// @ui {"widget":"group_end"}'

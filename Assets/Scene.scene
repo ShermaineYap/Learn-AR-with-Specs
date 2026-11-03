@@ -6,7 +6,7 @@
     - !<own> f5d74682-203a-4970-81ea-9fa7b88c96bb
     - !<own> 1e6bca07-3629-488a-adaa-a577ed2e91d2
     - !<own> f7f0ceba-30dd-41e9-9d0b-b3fe65ea97b3
-    - !<own> 6e6d823f-b70d-4d4a-9606-89f150ec20a0
+    - !<own> 7645ecd4-b864-44ec-8a97-4b252b4cdef1
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
       - id: 1
@@ -582,14 +582,16 @@
   ScriptAsset: !<reference> 402d5597-ac7e-4c40-8687-9c4d5d7ccca2
   ScriptInputsDefault:
     letterHeightCm: true
+    maxLines: true
     startHidden: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
-      tipText: Bark was cut too deep last time — go shallower
+      tipText: Cut too deep last time / go shallower
       letterHeightCm: !<float> 3.000000
-      wrapWidthCm: !<float> 44.000000
+      wrapWidthCm: !<float> 30.000000
+      maxLines: !<float> 2.000000
       textColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 0.920000, w: 1.000000}
       startHidden: true
   ScriptTypes:
@@ -918,14 +920,16 @@
   ScriptAsset: !<reference> 402d5597-ac7e-4c40-8687-9c4d5d7ccca2
   ScriptInputsDefault:
     letterHeightCm: true
+    maxLines: true
     startHidden: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
-      tipText: Follow the old cut — keep the 30° slope
+      tipText: Follow the old cut / keep 30°
       letterHeightCm: !<float> 3.000000
-      wrapWidthCm: !<float> 44.000000
+      wrapWidthCm: !<float> 30.000000
+      maxLines: !<float> 2.000000
       textColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 0.920000, w: 1.000000}
       startHidden: true
   ScriptTypes:
@@ -989,7 +993,6 @@
   Enabled: true
   ScriptAsset: !<reference> 8599cb4c-4abe-41be-8184-ddcbd4bbdddd
   ScriptInputsDefault:
-    tipText: true
     guideStartHeightCm: true
     guideThicknessCm: true
     guideColor: true
@@ -1009,7 +1012,7 @@
       endMark: !<reference.SceneObject> 0cdaef9a-3858-44fa-a327-8ff3f8a914b5
       tipNote: !<MappingBased.AssignableType_2> efe4f95c-725a-4a84-9418-c54578710e20
       tokAudio: !<reference.AudioComponent> 5ae5636b-c787-4525-b187-bf1c315c917d
-      tipText: Thin shave — stay under 1 mm
+      tipText: Thin shave / under 1 mm
       guideStartHeightCm: !<float> 120.000000
       guideThicknessCm: !<float> 1.000000
       guideColor: !<Vec4> {x: 1.000000, y: 0.900000, z: 0.550000, w: 1.000000}
@@ -1164,8 +1167,7 @@
   ScriptAsset: !<reference> 631971b6-ae4d-4005-9ec3-6fb429cb8596
   ScriptInputsDefault:
     message: true
-    viewDistanceCm: true
-    textColor: true
+    letterHeightCm: true
     holdSeconds: true
     fadeSeconds: true
   ScriptTypesDefault:
@@ -1173,8 +1175,8 @@
   ScriptInputs:
     "":
       message: 3 of 3 trees done
-      viewDistanceCm: !<float> 90.000000
-      textColor: !<Vec4> {x: 0.750000, y: 1.000000, z: 0.800000, w: 1.000000}
+      letterHeightCm: !<float> 5.000000
+      textColor: !<Vec4> {x: 1.000000, y: 0.950000, z: 0.820000, w: 1.000000}
       holdSeconds: !<float> 4.000000
       fadeSeconds: 1.200000
   ScriptTypes:
@@ -1553,7 +1555,7 @@
       endMark: !<reference.SceneObject> 06948e17-d2e8-45f1-ac6f-66f766f9e931
       tipNote: !<MappingBased.AssignableType_2> 1a26a154-9c98-4853-aa6c-91d56dae9afc
       tokAudio: !<reference.AudioComponent> e79249fc-3eb2-4980-9005-8e0ca4fd68e1
-      tipText: Bark was cut too deep last time — go shallower
+      tipText: Cut too deep last time / go shallower
       guideStartHeightCm: !<float> 120.000000
       guideThicknessCm: !<float> 1.000000
       guideColor: !<Vec4> {x: 1.000000, y: 0.900000, z: 0.550000, w: 1.000000}
@@ -1624,21 +1626,6 @@
     - !<own> 4c195c04-c397-454e-bd08-3485f37d84fe
   Components:
     []
-- !<SceneObject/6e6d823f-b70d-4d4a-9606-89f150ec20a0>
-  PrefabRemaps:
-    []
-  Name: LEAF Plugin Bridge
-  Enabled: true
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    []
-  Components:
-    - !<own> 73bdba0d-5f41-4a79-b9d7-269e3f3823ca
 - !<SceneObject/6f106526-50ef-4ff0-a767-740422435324>
   PrefabRemaps:
     []
@@ -1680,7 +1667,7 @@
       endMark: !<reference.SceneObject> ea4d8b8b-f55c-425c-b2d9-ae0bac4d5d3f
       tipNote: !<MappingBased.AssignableType_2> 33ab6043-0185-45ad-84e7-54f0060d7ea0
       tokAudio: !<reference.AudioComponent> 1a7bbbdb-36c9-4c4b-9434-a74498dc21a8
-      tipText: Follow the old cut — keep the 30° slope
+      tipText: Follow the old cut / keep 30°
       guideStartHeightCm: !<float> 120.000000
       guideThicknessCm: !<float> 1.000000
       guideColor: !<Vec4> {x: 1.000000, y: 0.900000, z: 0.550000, w: 1.000000}
@@ -1736,22 +1723,6 @@
     - !<own> 879ce45b-bd5e-40ff-a3fe-d821523427e4
   Components:
     - !<own> 64f27597-c99d-4c59-8a08-05459cc2258d
-- !<ScriptComponent/73bdba0d-5f41-4a79-b9d7-269e3f3823ca>
-  PrefabRemaps:
-    []
-  Name: MessagingBridge
-  Enabled: true
-  ScriptAsset: !<reference> 9aa407db-2872-4afc-a162-cf7faf2a0f29
-  ScriptInputsDefault:
-    {}
-  ScriptTypesDefault:
-    {}
-  ScriptInputs:
-    "":
-      {}
-  ScriptTypes:
-    "":
-      {}
 - !<SceneObject/74d13517-1dbf-42e6-b536-27afc4909c65>
   PrefabRemaps:
     []
@@ -1782,6 +1753,21 @@
     - !<own> 241be3d8-6f45-47d7-8b71-53778e375dc2
   Components:
     []
+- !<SceneObject/7645ecd4-b864-44ec-8a97-4b252b4cdef1>
+  PrefabRemaps:
+    []
+  Name: LEAF Plugin Bridge
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> f444ff79-13d2-4a64-80bf-50d7ed59a8e5
 - !<SceneObject/77a79970-63f4-4c7c-984a-539d2ef0c92a>
   PrefabRemaps:
     []
@@ -3245,16 +3231,17 @@
   Enabled: true
   ScriptAsset: !<reference> 402d5597-ac7e-4c40-8687-9c4d5d7ccca2
   ScriptInputsDefault:
-    tipText: true
     letterHeightCm: true
+    maxLines: true
     startHidden: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
-      tipText: Thin shave — stay under 1 mm
+      tipText: Thin shave / under 1 mm
       letterHeightCm: !<float> 3.000000
-      wrapWidthCm: !<float> 44.000000
+      wrapWidthCm: !<float> 30.000000
+      maxLines: !<float> 2.000000
       textColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 0.920000, w: 1.000000}
       startHidden: true
   ScriptTypes:
@@ -3306,6 +3293,22 @@
   Components:
     - !<own> d3e2fbc5-8795-4913-9af6-c8626f8e6d9c
     - !<own> 275aeb4d-77ac-4b1b-811e-907652542110
+- !<ScriptComponent/f444ff79-13d2-4a64-80bf-50d7ed59a8e5>
+  PrefabRemaps:
+    []
+  Name: MessagingBridge
+  Enabled: true
+  ScriptAsset: !<reference> 9aa407db-2872-4afc-a162-cf7faf2a0f29
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      {}
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/f5d74682-203a-4970-81ea-9fa7b88c96bb>
   PrefabRemaps:
     - 012a3973-9507-4230-a6ff-2b8dfd2154fe: e3ec5982-f5aa-45f3-4551-4d3a92a1f432

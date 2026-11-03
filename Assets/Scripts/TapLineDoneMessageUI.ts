@@ -3,16 +3,13 @@
 // Expects: to be placed (authored) near the last tree at about eye level, facing the user.
 // Must NOT: decide when the row is finished — TapLineMain calls show(). Passive view only.
 
-import {FlexLayout} from "SpectaclesUIKit.lspkg/Scripts/Components/Layout2D/Flex/FlexLayout"
-import {FlexItem} from "SpectaclesUIKit.lspkg/Scripts/Components/Layout2D/Flex/FlexItem"
-import {FlexAlign, FlexDirection, FlexJustify} from "SpectaclesUIKit.lspkg/Scripts/Components/Layout2D/Flex/FlexTypes"
 import Event, {PublicApi} from "SpectaclesInteractionKit.lspkg/Utils/Event"
 
 const ICON_CHECK: Texture = requireAsset("../Icons/check_circle.png") as Texture
 const IMAGE_MATERIAL: Material = requireAsset("../Materials/ImageMaterial.mat") as Material
 
-// Snap Specs type scale (references/patterns.md → Typography); calibrated at 110 cm.
-const HEADLINE1 = {size: 54, weight: 700}
+// Text.size is the em-square height: em cm = size / 43.886 (StudioLib.d.ts → Text.size).
+const TEXT_SIZE_PER_CM = 43.886
 
 @component
 export class TapLineDoneMessageUI extends BaseScriptComponent {
@@ -24,14 +21,14 @@ export class TapLineDoneMessageUI extends BaseScriptComponent {
   message: string = "3 of 3 trees done"
 
   @input
-  @hint("Viewing distance in cm the text is sized for (scales the Specs type scale).")
-  @widget(new SliderWidget(40, 200, 5))
-  viewDistanceCm: number = 90
+  @hint("Letter height (em-square) in cm. ~5 cm reads easily at about 1 m.")
+  @widget(new SliderWidget(2, 10, 0.5))
+  letterHeightCm: number = 5
 
-  @input("vec4", "{0.75, 1.0, 0.8, 1.0}")
-  @hint("Text and icon colour. Keep it light for the additive display.")
+  @input("vec4", "{1.0, 0.95, 0.82, 1.0}")
+  @hint("Text and icon colour: bright warm white. No backing — the display is additive.")
   @widget(new ColorWidget())
-  textColor: vec4 = new vec4(0.75, 1.0, 0.8, 1.0)
+  textColor: vec4 = new vec4(1.0, 0.95, 0.82, 1.0)
 
   @input
   @hint("Seconds the message stays at full opacity before fading.")
@@ -76,56 +73,48 @@ export class TapLineDoneMessageUI extends BaseScriptComponent {
 
   onAwake(): void {
     this.sceneObject.createComponent("Component.Canvas")
-    const scale = this.viewDistanceCm / 110
-    const textSize = HEADLINE1.size * scale
-    const iconCm = 2.2 * scale
-    const textW = 0.7 * (textSize / 62) * this.message.length + 1 // ~0.7 cm/char at size 62
-    const rowH = Math.max(iconCm, 2.0 * scale)
+    const em = this.letterHeightCm
+    const iconCm = em * 1.0
+    const gap = em * 0.35
+    // Bold sans averages ~0.55 em per character; used only to centre the row.
+    const textW = 0.55 * em * this.message.length
+    const rowW = iconCm + gap + textW
+    const left = -rowW / 2
+    const rowH = em * 1.4
 
-    const content = global.scene.createSceneObject("DoneContent")
-    content.setParent(this.sceneObject)
-    const flex = content.createComponent(FlexLayout.getTypeName()) as FlexLayout
-    flex.onInitialized.add(() => {
-      flex.width = iconCm + textW + 1
-      flex.height = rowH
-      flex.direction = FlexDirection.Row
-      flex.justifyContent = FlexJustify.Center
-      flex.alignItems = FlexAlign.Center
-      flex.columnGap = 0.6 * scale
-    })
-
+    // Icon on the left, vertically centred on the text.
     this.iconSO = global.scene.createSceneObject("DoneIcon")
-    this.iconSO.setParent(content)
+    this.iconSO.setParent(this.sceneObject)
     const img = this.iconSO.createComponent("Component.Image") as Image
     this.iconMat = IMAGE_MATERIAL.clone()
     this.iconMat.mainPass.baseTex = ICON_CHECK
-    this.iconMat.mainPass.depthTest = true
+    this.iconMat.mainPass.depthTest = false // always readable: the stand-in trunk must not hide it
     this.iconMat.mainPass.depthWrite = false
     img.clearMaterials()
     img.addMaterial(this.iconMat)
     this.iconSO.getTransform().setLocalScale(new vec3(iconCm, iconCm, 1))
-    const iconItem = this.iconSO.createComponent(FlexItem.getTypeName()) as FlexItem
-    iconItem.overrideWidth = iconCm
-    iconItem.overrideHeight = iconCm
+    this.iconSO.getTransform().setLocalPosition(new vec3(left + iconCm / 2, 0, 0))
 
+    // Text starts right after the icon.
     const textSO = global.scene.createSceneObject("DoneText")
-    textSO.setParent(content)
+    textSO.setParent(this.sceneObject)
     textSO.getTransform().setLocalPosition(new vec3(0, 0, 0.02))
     this.label = textSO.createComponent("Component.Text") as Text
     this.label.text = this.message
-    this.label.size = textSize
-    ;(this.label as Text & {weight?: number}).weight = HEADLINE1.weight
-    this.label.depthTest = true
+    this.label.size = em * TEXT_SIZE_PER_CM
+    ;(this.label as Text & {weight?: number}).weight = 700
+    // On the glasses a real trunk can't hide virtual text; keep the stand-in trunk from hiding it either.
+    this.label.depthTest = false
     this.label.horizontalAlignment = HorizontalAlignment.Center
     this.label.verticalAlignment = VerticalAlignment.Center
     this.label.horizontalOverflow = HorizontalOverflow.Overflow
     this.label.verticalOverflow = VerticalOverflow.Overflow
-    this.label.layoutRect = Rect.create(-textW / 2, textW / 2, -rowH / 2, rowH / 2)
-    const textItem = textSO.createComponent(FlexItem.getTypeName()) as FlexItem
-    textItem.overrideWidth = textW
-    textItem.overrideHeight = rowH
-    // Register explicitly once the layout is initialised (duplicates of auto-discovered items are ignored).
-    flex.onInitialized.add(() => flex.addItems([iconItem, textItem]))
+    // Centred layout box on the text's own object; centreRow() positions it beside the icon once measured.
+    this.label.layoutRect = Rect.create(-textW, textW, -rowH / 2, rowH / 2)
+    textSO.getTransform().setLocalPosition(new vec3(left + iconCm + gap + textW / 2, 0, 0.02))
+    this.iconCm = iconCm
+    this.gapCm = gap
+    this.rowH = rowH
     this.applyAlpha(0)
     this.createEvent("UpdateEvent").bind(() => this.tick(getDeltaTime()))
   }
@@ -136,6 +125,51 @@ export class TapLineDoneMessageUI extends BaseScriptComponent {
     this.holdLeft = this.holdSeconds
     this.fading = false
     this.applyAlpha(1)
+    this.centreRow()
+  }
+
+  private iconCm = 5
+  private gapCm = 1.75
+  private rowH = 7
+
+  private needsCentre = false
+
+  /**
+   * Centre icon + text as one row, using the text's real width from its cursor positions
+   * (the onAwake layout only estimates it). Text is centre-aligned on its own SceneObject.
+   */
+  private centreRow(): void {
+    let positions: CursorPosition[] = []
+    try {
+      positions = this.label.getCursorPositions()
+    } catch (e) {
+      positions = []
+    }
+    if (!positions || positions.length < 2) {
+      this.needsCentre = true // not laid out yet; try again next frame
+      return
+    }
+    let minX = Infinity
+    let maxX = -Infinity
+    for (const p of positions) {
+      minX = Math.min(minX, p.position.x)
+      maxX = Math.max(maxX, p.position.x)
+    }
+    let w = maxX - minX
+    // If there is no cursor after the last character, add one average character width.
+    if (positions.length <= this.message.length) w += w / Math.max(1, positions.length - 1)
+    if (!(w > 1)) {
+      this.needsCentre = true
+      return
+    }
+    this.needsCentre = false
+    const total = this.iconCm + this.gapCm + w
+    const left = -total / 2
+    this.iconSO.getTransform().setLocalPosition(new vec3(left + this.iconCm / 2, 0, 0))
+    // Glyph centre sits at (minX+maxX)/2 in the text's local layout; shift so it lands at the text slot centre.
+    const glyphCentre = (minX + (minX + w)) / 2
+    const slotCentre = left + this.iconCm + this.gapCm + w / 2
+    this.label.getSceneObject().getTransform().setLocalPosition(new vec3(slotCentre - glyphCentre, 0, 0.02))
   }
 
   hide(): void {
@@ -146,6 +180,7 @@ export class TapLineDoneMessageUI extends BaseScriptComponent {
 
   private tick(dt: number): void {
     if (this.alpha <= 0) return
+    if (this.needsCentre) this.centreRow()
     if (!this.fading) {
       this.holdLeft -= dt
       if (this.holdLeft <= 0) this.fading = true

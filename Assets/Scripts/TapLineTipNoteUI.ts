@@ -25,7 +25,7 @@ export class TapLineTipNoteUI extends BaseScriptComponent {
   @ui.group_start("Settings")
   @input
   @hint("Tip text. TapLineTree overwrites this with the tree's own tip when the guide starts.")
-  tipText: string = "Thin shave — stay under 1 mm"
+  tipText: string = "Thin shave / under 1 mm"
 
   @input
   @hint("Letter height (em-square) in cm. The brief asks for about 3 cm.")
@@ -33,9 +33,13 @@ export class TapLineTipNoteUI extends BaseScriptComponent {
   letterHeightCm: number = 3.0
 
   @input
-  @hint("Width the text wraps to, in cm.")
+  @hint("Maximum line width in cm. Lines longer than this shrink to fit, so the note always fits the view at arm's length.")
   @widget(new SliderWidget(15, 60, 1))
-  wrapWidthCm: number = 44
+  wrapWidthCm: number = 30
+
+  @input
+  @hint("Maximum number of lines. Use ' / ' in the tip text to split lines.")
+  maxLines: number = 2
 
   @input("vec4", "{1.0, 1.0, 0.92, 1.0}")
   @hint("Text colour. Keep it light — the Specs display is additive, so dark text disappears.")
@@ -72,13 +76,30 @@ export class TapLineTipNoteUI extends BaseScriptComponent {
     return this.alpha
   }
 
+  /** Number of lines in the current text. */
+  get lineCount(): number {
+    return this.currentText.split("\n").length
+  }
+
+  /** Height of the text block (cm) for maxLines lines — used to place the note above the cut. */
+  get blockHeightCm(): number {
+    return this.letterHeightCm * 1.2 * this.maxLines
+  }
+
+  /** "Thin shave / under 1 mm" → two lines. */
+  static toLines(msg: string, maxLines: number): string {
+    const parts = msg.split("/").map((s) => s.trim()).filter((s) => s.length > 0)
+    if (parts.length <= maxLines) return parts.join("\n")
+    return parts.slice(0, maxLines - 1).concat([parts.slice(maxLines - 1).join(" ")]).join("\n")
+  }
+
   onAwake(): void {
     this.sceneObject.createComponent("Component.Canvas")
 
     const content = global.scene.createSceneObject("TipContent")
     content.setParent(this.sceneObject)
     const flex = content.createComponent(FlexLayout.getTypeName()) as FlexLayout
-    const h = this.letterHeightCm * 3.4
+    const h = this.blockHeightCm
     flex.onInitialized.add(() => {
       flex.width = this.wrapWidthCm
       flex.height = h
@@ -91,13 +112,14 @@ export class TapLineTipNoteUI extends BaseScriptComponent {
     textSO.setParent(content)
     textSO.getTransform().setLocalPosition(new vec3(0, 0, 0.02))
     this.label = textSO.createComponent("Component.Text") as Text
-    this.label.text = this.tipText
+    this.label.text = TapLineTipNoteUI.toLines(this.tipText, this.maxLines)
     this.label.size = this.letterHeightCm * TEXT_SIZE_PER_CM
     ;(this.label as Text & {weight?: number}).weight = 700
     this.label.depthTest = true
     this.label.horizontalAlignment = HorizontalAlignment.Center
     this.label.verticalAlignment = VerticalAlignment.Center
-    this.label.horizontalOverflow = HorizontalOverflow.Wrap
+    // Explicit lines; any line wider than wrapWidthCm shrinks to fit rather than spilling out of view.
+    this.label.horizontalOverflow = HorizontalOverflow.Shrink
     this.label.verticalOverflow = VerticalOverflow.Overflow
     this.label.layoutRect = Rect.create(-this.wrapWidthCm / 2, this.wrapWidthCm / 2, -h / 2, h / 2)
     const item = textSO.createComponent(FlexItem.getTypeName()) as FlexItem
@@ -111,7 +133,7 @@ export class TapLineTipNoteUI extends BaseScriptComponent {
 
   setText(msg: string): void {
     this.tipText = msg
-    if (this.label) this.label.text = msg
+    if (this.label) this.label.text = TapLineTipNoteUI.toLines(msg, this.maxLines)
   }
 
   /** Show at full opacity, then hold for holdSec and fade over fadeSec. holdSec <= 0 holds forever. */

@@ -63,7 +63,7 @@ export class TapLineTree extends BaseScriptComponent {
   @ui.group_start("Settings")
   @input
   @hint("Tip text shown with the guide on this tree.")
-  tipText: string = "Thin shave — stay under 1 mm"
+  tipText: string = "Thin shave / under 1 mm"
 
   @input
   @hint("Height (cm above the floor) where the cut guide starts, on the left.")
@@ -225,6 +225,7 @@ export class TapLineTree extends BaseScriptComponent {
       this.buildGuide()
       // Latex cup hangs just below the low (right) end of the cut, so the stand-in reads as a rubber tree.
       this.trunk.addLatexCup(GUIDE_END_ANGLE_DEG * DEG, this.guideEndLocal.y)
+      this.placeTipNote()
       this.buildTrunkTarget()
       this.buildEndTarget()
       this.setupAudio()
@@ -326,6 +327,25 @@ export class TapLineTree extends BaseScriptComponent {
   private buildGlow(): void {
     this.glowMat = this.makeMat(this.glowColor, false)
     this.visualOn(this.glow, buildGlowShell(this.trunk, 20, 240, 1.2), this.glowMat)
+  }
+
+  /**
+   * Centres the tip note on the trunk just above the cut line, close to the bark, tilted up toward a
+   * standing user. It is lifted so that, seen from eye height at arm's length (looking down ~30°),
+   * its bottom line clears the start mark — text 2 cm off the bark appears lower than the bark behind it.
+   */
+  private placeTipNote(): void {
+    if (!this.tipNote) return
+    const tiltDeg = 25
+    const offBark = 2
+    const z = this.trunk.trunkRadius + offBark
+    const startMarkLocal = this.trunk.surfacePoint(GUIDE_START_ANGLE_DEG * DEG, this.guideStartHeightCm, 0)
+    const parallax = (z - startMarkLocal.z) * Math.tan(30 * DEG)
+    const bottom = this.guideStartHeightCm + START_MARK_CM / 2 + 1.5 + parallax
+    const y = bottom + this.tipNote.blockHeightCm / 2
+    const t = this.tipNote.getSceneObject().getTransform()
+    t.setLocalPosition(new vec3(0, y, z))
+    t.setLocalRotation(quat.angleAxis(-tiltDeg * DEG, vec3.right()))
   }
 
   private guideHeightAt(theta: number): number {
